@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-16",
+  "updated": "2026-10-19",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 testing in progress",
-      "note": "Scored tools ran our standard task on 2026-10-15 or 2026-10-16 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider and Cline: gemini-3.8-flash, Bolt.new: its Free-plan default), and the model affects the score, so treat cross-tool comparisons with care. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16.",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-19 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider and Cline: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -123,6 +123,29 @@
           }
         },
         {
+          "name": "OpenCode",
+          "url": "https://opencode.ai",
+          "free_tier": "Yes",
+          "pricing": "Free, open source; free models included, or bring your own model provider",
+          "description": "Open-source AI coding agent for the terminal, IDE and desktop, with built-in free models.",
+          "status": "Tested",
+          "score": 93,
+          "test": {
+            "date": "2026-10-19",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "OpenCode CLI 1.19.3",
+            "model": "deepseek-v4.1-flash-free (OpenCode built-in free model, no account)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 23,
+              "speed_effort": 12,
+              "cost_free_tier": 10,
+              "developer_experience": 8
+            },
+            "evidence": "Passed 10/10 automated checks; the successful run took 20 s with no sign-in and no card. First try on the big-pickle free model returned 'Rate limit exceeded', so we re-ran on another built-in free model (counts as 1 intervention, -3 speed). -1 quality: README says to visit localhost:8000 after 'npx serve .', which serves on port 3000. -1: the checkbox accessibility label is always 'Mark task complete'. -2 DX: with no model set it auto-picked a provider it had no credentials for (an unrelated Cloudflare token on our test machine), and 'opencode run' hung when stdin was left open; the final summary was one line."
+          }
+        },
+        {
           "name": "Claude Code",
           "url": "https://www.anthropic.com/claude-code",
           "free_tier": "No",
@@ -174,6 +197,24 @@
     }
   ],
   "new_this_week": [
+    {
+      "name": "Sphinx",
+      "url": "https://github.com/parthh01/sphinx",
+      "description": "Free, open-source (MIT) git hook for agent-assisted coding: before you push, it quizzes you on what your AI agent's changes actually do. Show HN, Oct 18, 2026.",
+      "found": "2026-10-19"
+    },
+    {
+      "name": "WhatsApp MCP (Cloudflare)",
+      "url": "https://github.com/finereli/whatsapp-mcp",
+      "description": "Open-source (MIT), read-only MCP server that lets your AI agent search and read your own WhatsApp messages; runs on Cloudflare Workers' free tier. Show HN, Oct 18, 2026.",
+      "found": "2026-10-19"
+    },
+    {
+      "name": "llmspeed",
+      "url": "https://llmspeed.dev",
+      "description": "Free, open-source web tool that simulates how fast a local LLM would run (tokens/sec, time to first token) on a given GPU or Mac before you buy hardware. Show HN, Oct 17, 2026.",
+      "found": "2026-10-19"
+    },
     {
       "name": "withHuman",
       "url": "https://withhuman.ai",
