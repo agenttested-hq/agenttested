@@ -4,7 +4,7 @@
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
-      "status": "Round 1 testing in progress",
+      "status": "Round 1 complete",
       "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-19 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider and Cline: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19).",
       "tools": [
         {
@@ -153,7 +153,7 @@
           "free_tier": "No",
           "pricing": "Paid Claude plan or Anthropic API usage",
           "description": "Anthropic's agentic coding tool that works in your terminal, IDE and codebase.",
-          "status": "Not yet tested",
+          "status": "Untested: paid plan only",
           "score": null
         },
         {
@@ -162,7 +162,7 @@
           "free_tier": "No",
           "pricing": "Included with paid ChatGPT plans (from $20/mo Plus)",
           "description": "OpenAI's coding agent across ChatGPT, the cloud, the IDE extension and the terminal.",
-          "status": "Not yet tested",
+          "status": "Untested: paid plan only",
           "score": null
         },
         {
@@ -191,7 +191,7 @@
           "free_tier": "Yes",
           "pricing": "Free editor + paid AI plans",
           "description": "Fast open-source code editor with built-in AI agent editing.",
-          "status": "Not yet tested",
+          "status": "Untested: agent runs only in the desktop app",
           "score": null
         }
       ],
