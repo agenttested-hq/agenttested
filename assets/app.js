@@ -2,7 +2,7 @@ fetch('data/tools.json').then(r=>r.json()).then(d=>{
  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const lb=document.getElementById('lb');
  if(lb&&!lb.children.length){const b=d.leaderboards[0];document.getElementById('lbnote').textContent=b.note;
-  lb.innerHTML=b.tools.map(t=>`<tr><td><a href="${esc(t.url)}" rel="noopener" target="_blank"><b>${esc(t.name)}</b></a><div class="mut">${esc(t.description)}</div></td><td class="${t.free_tier==='Yes'?'yes':'no'}">${esc(t.free_tier)}</td><td class="hide-sm mut">${esc(t.pricing)}</td><td class="mut">Not yet tested</td></tr>`).join('');}
+  lb.innerHTML=b.tools.map(t=>`<tr><td><a href="${esc(t.url)}" rel="noopener" target="_blank"><b>${esc(t.name)}</b></a><div class="mut">${esc(t.description)}</div>${t.referral_url?`<div class="sm"><a href="${esc(t.referral_url)}" rel="sponsored noopener" target="_blank">Try ${esc(t.name)} (referral)</a></div><div class="mut sm">${esc(t.referral_note||'')}</div>`:''}</td><td class="${t.free_tier==='Yes'?'yes':'no'}">${esc(t.free_tier)}</td><td class="hide-sm mut">${esc(t.pricing)}</td><td class="mut">Not yet tested</td></tr>`).join('');}
  const nw=document.getElementById('new');
  if(nw){const nl=d.new_this_week.slice().sort((a,b)=>String(b.found||'').localeCompare(String(a.found||'')));nw.innerHTML=nl.length?nl.map(t=>{
    const found=t.found?`<div class="mut sm">Found ${esc(t.found)}</div>`:'';

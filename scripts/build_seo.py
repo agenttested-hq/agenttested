@@ -39,8 +39,13 @@ def score_cell(t):
     return (f'<b class="score">{t["score"]}</b><span class="mut">/100</span><div class="mut sm">{e(b)}</div>'
             f'<div class="mut sm">Tested {e(x["date"])} · {e(x["tool_version"])} · model: {e(x["model"])}</div>'
             f'<div class="mut sm">{e(x["evidence"])} <a href="tests.html">Details</a></div>')
+def ref_cell(t):
+    if not t.get("referral_url"):
+        return ""
+    return (f'<div class="sm"><a href="{e(t["referral_url"])}" rel="sponsored noopener" target="_blank">Try {e(t["name"])} (referral)</a></div>'
+            f'<div class="mut sm">{e(t.get("referral_note", "Referral link: we may earn a commission; it never affects scores or rankings."))}</div>')
 rows = "".join(
-    f'<tr><td><a href="{e(t["url"])}" rel="noopener" target="_blank"><b>{e(t["name"])}</b></a><div class="mut">{e(t["description"])}</div></td>'
+    f'<tr><td><a href="{e(t["url"])}" rel="noopener" target="_blank"><b>{e(t["name"])}</b></a><div class="mut">{e(t["description"])}</div>{ref_cell(t)}</td>'
     f'<td class="{"yes" if t["free_tier"]=="Yes" else "no"}">{e(t["free_tier"])}</td><td class="hide-sm mut">{e(t["pricing"])}</td>'
     f'<td>{score_cell(t)}</td></tr>' for t in lb["tools"])
 ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"], "itemListElement": [

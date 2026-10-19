@@ -102,6 +102,8 @@
         {
           "name": "Bolt.new",
           "url": "https://bolt.new",
+          "referral_url": "https://bolt.cello.so/47zjYO5tbRY",
+          "referral_note": "Referral link: we may earn a commission and you get 20% off; it never affects scores or rankings.",
           "free_tier": "Yes",
           "pricing": "Free plan + paid plans",
           "description": "Browser-based AI app builder that generates, runs and deploys full-stack web apps from prompts.",
