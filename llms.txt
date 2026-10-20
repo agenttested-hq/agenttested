@@ -27,3 +27,7 @@ Scored tools ran our standard task between 2026-10-15 and 2026-10-20 (see the te
 
 ## Newsletter
 - [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.
+
+## Official channels
+- Site: https://agenttested-hq.github.io/agenttested/ (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.
+- AgentTested is not affiliated with agenttested.ai or @agenttested on X.

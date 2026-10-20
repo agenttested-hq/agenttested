@@ -35,7 +35,7 @@ for t in lb["tools"]:
     score = t.get("score")
     sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {t['test']['evidence']}" if score is not None else t.get("status", "Not yet tested")
     lines.append(f"- [{t['name']}]({t['url']}): {t['description']} Free tier: {t['free_tier']}. Pricing: {t['pricing']}. Test score: {sc}")
-lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", ""]
+lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))
 
 e = html.escape
