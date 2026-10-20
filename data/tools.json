@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-19",
+  "updated": "2026-10-20",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-19 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider and Cline: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-20 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline and Crush: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -28,6 +28,29 @@
               "developer_experience": 10
             },
             "evidence": "Passed 10/10 automated checks in 38 s with no interventions on Copilot Free. -1 quality: the checkbox accessibility label always says 'Mark as complete', even for completed tasks."
+          }
+        },
+        {
+          "name": "Crush",
+          "url": "https://github.com/charmbracelet/crush",
+          "free_tier": "Yes",
+          "pricing": "Free, source-available (FSL-1.1-MIT); you pay for your own model API usage (Charm's own Hyper provider has a free tier but needs sign-in)",
+          "description": "Charm's open terminal coding agent (Crush CLI) that works with many model providers (Gemini, OpenAI, Anthropic, OpenRouter and more).",
+          "status": "Tested",
+          "score": 97,
+          "test": {
+            "date": "2026-10-20",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Crush 0.98.1",
+            "model": "gemini-3.8-flash (Gemini API free tier)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 24,
+              "speed_effort": 14,
+              "cost_free_tier": 10,
+              "developer_experience": 9
+            },
+            "evidence": "Passed 10/10 automated checks in 646 s (17 model requests, no interventions) on the Gemini API free tier. It wrote its own Node test, caught and fixed a counter bug before finishing. -1 quality: the checkbox accessibility label is always 'Mark task complete'. -1 speed: took about 11 minutes (slow model responses). -1 DX: short final summary and a .crush/ data folder left in the project. Checker note: the original checker missed the counter because the number and label are separate flex items; checker v1.1 fixes this for every tool (all earlier scores unchanged)."
           }
         },
         {
@@ -73,7 +96,7 @@
               "cost_free_tier": 10,
               "developer_experience": 8
             },
-            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed \u22123 for the high-demand re-run. DX \u22122: no final summary because of quota."
+            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed −3 for the high-demand re-run. DX −2: no final summary because of quota."
           }
         },
         {
@@ -199,6 +222,36 @@
     }
   ],
   "new_this_week": [
+    {
+      "name": "buddylist",
+      "url": "https://buddylist.dev",
+      "description": "Free desktop app (Mac, Windows, Linux) that puts Claude Code, Codex, Gemini and OpenCode in an MSN-style buddy list: group chats, separate Git worktrees, diffs and PR checks. Bring your own agent accounts. Product Hunt #8 and Show HN, Oct 19, 2026.",
+      "found": "2026-10-20"
+    },
+    {
+      "name": "Craig",
+      "url": "https://craig-cli.com",
+      "description": "Free, open-source (MIT) terminal UI that runs Claude Code, Codex and Cursor agents in parallel, each task in its own Git worktree, from task to PR. npm install, no account. Show HN, Oct 19, 2026.",
+      "found": "2026-10-20"
+    },
+    {
+      "name": "Quorus",
+      "url": "https://www.quorus.dev",
+      "description": "Free, open-source (MIT) local relay where Claude Code, Codex and OpenCode agents join one room over MCP, fix in their own worktrees and review each other's work. Demo runs on free OpenCode models. Show HN, Oct 19, 2026.",
+      "found": "2026-10-20"
+    },
+    {
+      "name": "Spotnote",
+      "url": "https://github.com/harukikuri/spotnote",
+      "description": "Free, open-source (MIT) Vite plugin: click any element in your running app, write what should change, and hand your coding agent the exact file, line and column. Local only, no account. Show HN, Oct 19, 2026.",
+      "found": "2026-10-20"
+    },
+    {
+      "name": "Lights-on software factory",
+      "url": "https://github.com/gojko/lights-on-software-factory",
+      "description": "Free, open-source (MIT) boilerplate for running Claude Code as a 'software factory': sandbox container, deterministic command regulator, linter hooks and a workflow generator that the author says cut token spend about 80%. Show HN, Oct 20, 2026.",
+      "found": "2026-10-20"
+    },
     {
       "name": "Sphinx",
       "url": "https://github.com/parthh01/sphinx",

@@ -9,6 +9,14 @@ upd = d["updated"]
 lb = d["leaderboards"][0]
 pages = {"": "AgentTested: AI tools, actually tested", "leaderboard.html": "Best AI coding agents", "tests.html": "Round 1 test write-up", "about.html": "Methodology"}
 DESC = "AI tools ranked by agents that actually test them, for builders, vibe coders and game devs."
+_sc = [t for t in lb["tools"] if t.get("score") is not None]
+_top = ", ".join(f'{t["name"]} {t["score"]}' for t in _sc[:4])
+PDESC = {  # per-page meta descriptions, regenerated from data so scores stay current
+    "": f"AI tools ranked by agents that actually test them, for builders, vibe coders and game devs. {len(_sc)} AI coding agents scored so far: {_top} and more.",
+    "leaderboard.html": f"{len(_sc)} AI coding agents tested on the same task, all on free tiers: {_top} and more. Scores, pricing and free tiers, updated {upd}.",
+    "tests.html": f"How we tested {len(_sc)} AI coding agents: one standard prompt, 10 automated browser checks and a 100-point rubric, with per-tool deductions.",
+    "about.html": "How AgentTested scores AI tools: a 100-point rubric (task success, quality, speed, cost, developer experience). Rankings can't be bought.",
+}
 
 (ROOT / "robots.txt").write_text(
     "# All crawlers, including AI assistants (GPTBot, ClaudeBot, PerplexityBot, Google-Extended), are welcome.\n"
@@ -58,9 +66,11 @@ for p, title in pages.items():
     f = ROOT / (p or "index.html")
     s = f.read_text()
     s = re.sub(r'<!--seo-->.*?<!--/seo-->', '', s, flags=re.S)
+    pd = PDESC.get(p, DESC)
+    s = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{e(pd)}">', s, count=1)
     meta = (f'<!--seo--><link rel="canonical" href="{BASE}{p}"><meta property="og:type" content="website">'
             f'<meta property="og:site_name" content="AgentTested"><meta property="og:title" content="{e(title)}">'
-            f'<meta property="og:description" content="{e(DESC)}"><meta property="og:url" content="{BASE}{p}">'
+            f'<meta property="og:description" content="{e(pd)}"><meta property="og:url" content="{BASE}{p}">'
             f'<meta name="twitter:card" content="summary">')
     if p == "leaderboard.html":
         meta += '<script type="application/ld+json">' + json.dumps(ld) + '</script>'
