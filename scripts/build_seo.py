@@ -35,6 +35,10 @@ for t in lb["tools"]:
     score = t.get("score")
     sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {t['test']['evidence']}" if score is not None else t.get("status", "Not yet tested")
     lines.append(f"- [{t['name']}]({t['url']}): {t['description']} Free tier: {t['free_tier']}. Pricing: {t['pricing']}. Test score: {sc}")
+_nw = sorted(d.get("new_this_week", []), key=lambda t: str(t.get("found", "")), reverse=True)
+if _nw:
+    lines += ["", "## New this week (found by our discovery agents; listed, not yet tested or scored)"]
+    lines += [f"- [{t['name']}]({t['url']}): {t['description']} Found {t.get('found', 'n/a')}." for t in _nw]
 lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))
 
@@ -56,6 +60,10 @@ rows = "".join(
     f'<tr><td><a href="{e(t["url"])}" rel="noopener" target="_blank"><b>{e(t["name"])}</b></a><div class="mut">{e(t["description"])}</div>{ref_cell(t)}</td>'
     f'<td class="{"yes" if t["free_tier"]=="Yes" else "no"}">{e(t["free_tier"])}</td><td class="hide-sm mut">{e(t["pricing"])}</td>'
     f'<td>{score_cell(t)}</td></tr>' for t in lb["tools"])
+def nw_card(t):
+    found = f'<div class="mut sm">Found {e(t["found"])}</div>' if t.get("found") else ""
+    return f'<div class="card"><a href="{e(t["url"])}" rel="noopener" target="_blank"><b>{e(t["name"])}</b></a><div class="mut">{e(t["description"])}</div>{found}</div>'
+nw_html = "".join(nw_card(t) for t in _nw)
 ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"], "itemListElement": [
     {"@type": "ListItem", "position": i + 1, "item": {"@type": "SoftwareApplication", "name": t["name"], "url": t["url"],
      "applicationCategory": "DeveloperApplication", "description": t["description"],
@@ -76,6 +84,8 @@ for p, title in pages.items():
         meta += '<script type="application/ld+json">' + json.dumps(ld) + '</script>'
         s = re.sub(r'<p id="lbnote">.*?</p>', f'<p id="lbnote">{e(lb["note"])}</p>', s, flags=re.S)
         s = re.sub(r'<tbody id="lb">.*?</tbody>', f'<tbody id="lb">{rows}</tbody>', s, flags=re.S)
+    if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
+        s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)
     s = re.sub(r'<span id="upd">.*?</span>', f'<span id="upd">{upd}</span>', s)
     f.write_text(s)

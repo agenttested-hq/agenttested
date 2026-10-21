@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-20",
+  "updated": "2026-10-21",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-20 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline and Crush: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-21 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush and Goose: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -148,6 +148,29 @@
           }
         },
         {
+          "name": "Goose",
+          "url": "https://goose-docs.ai",
+          "free_tier": "Yes",
+          "pricing": "Free, open source (Apache-2.0); you pay for your own model API usage",
+          "description": "Open-source, extensible AI agent (desktop app, CLI and API) from the Agentic AI Foundation, originally built by Block; works with many model providers.",
+          "status": "Tested",
+          "score": 94,
+          "test": {
+            "date": "2026-10-21",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Goose CLI 1.55.0",
+            "model": "gemini-3.8-flash (Gemini API free tier)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 25,
+              "speed_effort": 10,
+              "cost_free_tier": 10,
+              "developer_experience": 9
+            },
+            "evidence": "Passed 10/10 automated checks with no interventions on the Gemini API free tier. All four files were written within 18.5 minutes (6 model requests), but Gemini 'high demand' errors and slow responses meant Goose had not posted its final reply when our 20-minute timebox ended, so we scored the files present at the cutoff and counted the full 20 minutes. Quality 25: clean IIFE, validates saved data, try/catch on storage, textContent rendering, checkbox and delete labels that name the task and flip with its state. -5 speed: 20 minutes against the 5-minute target. -1 DX: no final summary before the cutoff."
+          }
+        },
+        {
           "name": "OpenCode",
           "url": "https://opencode.ai",
           "free_tier": "Yes",
@@ -222,6 +245,48 @@
     }
   ],
   "new_this_week": [
+    {
+      "name": "Reticle",
+      "url": "https://reticle.sh",
+      "description": "Makes your coding agent verify its own work: drives the running app, reads network calls, state and console, and returns pass/fail/cannot tell with the file:line to fix. SDK Apache-2.0, server source-available (FSL); free to start, no card. Show HN Oct 20.",
+      "found": "2026-10-21"
+    },
+    {
+      "name": "fx0 (Vercel)",
+      "url": "https://fx0.vercel.dev",
+      "description": "Vercel's open-source design agent: describe a page and it writes one HTML file, built on the durable libfx agent loop. Apache-2.0 (vercel-labs/fx0); hosted demo has a few free prompts, or self-host with your own AI Gateway.",
+      "found": "2026-10-21"
+    },
+    {
+      "name": "Nimbalyst Wiki",
+      "url": "https://nimbalyst.com/wiki",
+      "description": "A local markdown wiki your coding agents write and keep updated (decisions, open questions, the big picture). Free MIT plugin + MCP server for Claude Code, Codex, Cursor, VS Code and other MCP agents; no account. Product Hunt Oct 20.",
+      "found": "2026-10-21"
+    },
+    {
+      "name": "MCP Census",
+      "url": "https://mcpcensus.com",
+      "description": "Checks public evidence for an MCP server before you install it and returns PASS / REVIEW / BLOCK / UNKNOWN (a first gate, not a malware scan). 10 free lookups/day with no signup; free account 1,000 credits/month. Show HN Oct 20.",
+      "found": "2026-10-21"
+    },
+    {
+      "name": "Pando",
+      "url": "https://trypando.ai",
+      "description": "Self-hosted platform to deploy and share apps your team builds with AI, each behind access control from the start. Open source (AGPL-3.0); paid commercial license/hosting optional. Show HN Oct 20.",
+      "found": "2026-10-21"
+    },
+    {
+      "name": "Triage by Chodeberg",
+      "url": "https://triage.chodeberg.com",
+      "description": "Users file bug reports from their AI assistant into a live copy of your CLI/TUI/Linux app; Triage replays each on a clean machine and only forwards the ones that reproduce. Free 100 credits/month, then pay per minute. Product Hunt Oct 20.",
+      "found": "2026-10-21"
+    },
+    {
+      "name": "Hermes GameForge",
+      "url": "https://github.com/DECRUX9812/hermes-plugin-gameforge",
+      "description": "Game-dev plugin for the Hermes agent: generates SFX, music, NPC voices, sprites, tilesets and low-poly 3D models offline, scaffolds web/Godot/Unity builds and runs a playtester bot. MIT; brand-new (Oct 21) and not reviewed by us yet.",
+      "found": "2026-10-21"
+    },
     {
       "name": "buddylist",
       "url": "https://buddylist.dev",
