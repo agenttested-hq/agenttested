@@ -35,9 +35,14 @@ for t in lb["tools"]:
     score = t.get("score")
     sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {t['test']['evidence']}" if score is not None else t.get("status", "Not yet tested")
     lines.append(f"- [{t['name']}]({t['url']}): {t['description']} Free tier: {t['free_tier']}. Pricing: {t['pricing']}. Test score: {sc}")
-_nw = sorted(d.get("new_this_week", []), key=lambda t: str(t.get("found", "")), reverse=True)
+# "New this week" = finds from the 7 days up to the data date (updated and the 6 days before it).
+# Older finds stay in data/tools.json as an archive but are no longer shown or listed.
+import datetime as _dt
+NW_DAYS = 7
+_nw_cut = (_dt.date.fromisoformat(upd) - _dt.timedelta(days=NW_DAYS - 1)).isoformat()
+_nw = sorted((t for t in d.get("new_this_week", []) if str(t.get("found", "")) >= _nw_cut), key=lambda t: str(t.get("found", "")), reverse=True)
 if _nw:
-    lines += ["", "## New this week (found by our discovery agents; listed, not yet tested or scored)"]
+    lines += ["", f"## New this week (found by our discovery agents {_nw_cut} to {upd}; listed, not yet tested or scored)"]
     lines += [f"- [{t['name']}]({t['url']}): {t['description']} Found {t.get('found', 'n/a')}." for t in _nw]
 lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))

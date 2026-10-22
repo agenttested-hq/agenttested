@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-21",
+  "updated": "2026-10-22",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-21 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush and Goose: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-22 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose and Pi: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -28,6 +28,29 @@
               "developer_experience": 10
             },
             "evidence": "Passed 10/10 automated checks in 38 s with no interventions on Copilot Free. -1 quality: the checkbox accessibility label always says 'Mark as complete', even for completed tasks."
+          }
+        },
+        {
+          "name": "Pi",
+          "url": "https://pi.dev",
+          "free_tier": "Yes",
+          "pricing": "Free, open source (MIT); you pay for your own model API usage",
+          "description": "Minimal, extensible open-source terminal coding agent (read, bash, edit and write tools, plus extensions, skills and print/JSON/RPC modes); works with many model providers.",
+          "status": "Tested",
+          "score": 98,
+          "test": {
+            "date": "2026-10-22",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Pi 1.4.0",
+            "model": "gemini-3.8-flash (Gemini API free tier)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 25,
+              "speed_effort": 15,
+              "cost_free_tier": 10,
+              "developer_experience": 8
+            },
+            "evidence": "Passed 10/10 automated checks in 50 s with no interventions on the Gemini API free tier. It wrote all four files in 6 model requests, then a 7th request (a quick self-check) hit the free tier's per-minute request limit and Pi stopped without retrying, so there was no final summary. Quality 25: clean IIFE, try/catch on storage, textContent rendering, labelled input, checkbox and delete labels that name the task and flip with its state, correct README. -1 DX: needs Node 22.19+ (one extra step on our Node 20 machine). -1 DX: no final summary and no retry after the rate-limit error."
           }
         },
         {
@@ -245,6 +268,42 @@
     }
   ],
   "new_this_week": [
+    {
+      "name": "Omnara",
+      "url": "https://github.com/omnara-ai/omnara",
+      "description": "Open-source, self-hostable server for durable agents: create an agent with an API call and Omnara runs the loop, sandboxes, secrets and permissions, with state in Postgres so agents survive restarts. Your laptop or a cloud sandbox can join as a machine. Apache-2.0; hosted version at omnara.com. Show HN Oct 21.",
+      "found": "2026-10-22"
+    },
+    {
+      "name": "Harp",
+      "url": "https://github.com/dominikmartn/harp",
+      "description": "Unofficial fork of the Warp terminal with a sidebar for running many Claude Code and Codex sessions side by side: shows which agent is working, waiting for you or done, plus usage-limit rings. macOS, free, AGPL-3.0. Created Oct 20, trending on GitHub.",
+      "found": "2026-10-22"
+    },
+    {
+      "name": "durable-harness (Vercel)",
+      "url": "https://github.com/vercel-labs/durable-harness",
+      "description": "Runs Claude Code, Codex, OpenCode, Pi or your own coding agent as a durable session that logs every model and tool call and resumes after crashes or timeouts. Open source (Apache-2.0) from Vercel Labs; announced Oct 20.",
+      "found": "2026-10-22"
+    },
+    {
+      "name": "BAND for Developers",
+      "url": "https://www.band.ai",
+      "description": "Shared chat rooms where coding agents and people collaborate, with governance over how agents talk to each other. Free plan for personal, non-commercial use (up to 20 remote agents); Pro $17.99/mo. Product Hunt #2 on Oct 21.",
+      "found": "2026-10-22"
+    },
+    {
+      "name": "SuperCMO AI",
+      "url": "https://getsupercmo.ai",
+      "description": "Open-source agent skills that turn Claude Code, Cursor or Codex into a marketing team for your product: learns your brand, studies competitor ads, writes copy and makes UGC, product and image ads, asking before anything expensive renders. Apache-2.0; bring your own model keys or pay per use. Product Hunt Oct 21.",
+      "found": "2026-10-22"
+    },
+    {
+      "name": "Opposable",
+      "url": "https://getopposable.com",
+      "description": "Free Android app that lets Claude, ChatGPT or Codex operate your phone's apps, with an on-device 2B screen model (GUI-Owl 1.5, 1.5 GB download) as an offline fallback. Show HN Oct 21.",
+      "found": "2026-10-22"
+    },
     {
       "name": "Reticle",
       "url": "https://reticle.sh",
