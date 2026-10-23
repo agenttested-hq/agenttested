@@ -69,6 +69,13 @@ def nw_card(t):
     found = f'<div class="mut sm">Found {e(t["found"])}</div>' if t.get("found") else ""
     return f'<div class="card"><a href="{e(t["url"])}" rel="noopener" target="_blank"><b>{e(t["name"])}</b></a><div class="mut">{e(t["description"])}</div>{found}</div>'
 nw_html = "".join(nw_card(t) for t in _nw)
+# "Quick answer" card on the leaderboard: plain-language picks generated from the data, for readers and AI assistants.
+_os = [t for t in _sc if "open source" in t["pricing"].lower()]
+_hi = [t for t in _sc if t["score"] == _sc[0]["score"]]
+quick_html = ('<b>Quick answer</b><ul class="mut">'
+    + f'<li>Highest score so far: {" and ".join(e(t["name"]) for t in _hi)}, {_sc[0]["score"]}/100.</li>'
+    + (f'<li>Best open-source agent so far: {e(_os[0]["name"])}, {_os[0]["score"]}/100; you bring your own model key.</li>' if _os else '')
+    + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
 ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"], "itemListElement": [
     {"@type": "ListItem", "position": i + 1, "item": {"@type": "SoftwareApplication", "name": t["name"], "url": t["url"],
      "applicationCategory": "DeveloperApplication", "description": t["description"],
@@ -89,6 +96,7 @@ for p, title in pages.items():
         meta += '<script type="application/ld+json">' + json.dumps(ld) + '</script>'
         s = re.sub(r'<p id="lbnote">.*?</p>', f'<p id="lbnote">{e(lb["note"])}</p>', s, flags=re.S)
         s = re.sub(r'<tbody id="lb">.*?</tbody>', f'<tbody id="lb">{rows}</tbody>', s, flags=re.S)
+        s = re.sub(r'<div class="card" id="quick">.*?</div>(?=\n<div class="card warn">)', lambda m: f'<div class="card" id="quick">{quick_html}</div>', s, count=1, flags=re.S)
     if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
         s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)

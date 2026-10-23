@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-22",
+  "updated": "2026-10-23",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-22 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose and Pi: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-23 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -217,6 +217,29 @@
           }
         },
         {
+          "name": "Qwen Code",
+          "url": "https://github.com/QwenLM/qwen-code",
+          "free_tier": "Yes",
+          "pricing": "Free, open source (Apache-2.0); you pay for your own model API usage (the free Qwen OAuth tier ended 2026-04-15)",
+          "description": "Open-source terminal coding agent from Alibaba's Qwen team (originally forked from Gemini CLI); works with OpenAI-, Anthropic- and Gemini-compatible providers and has a headless mode for scripts and CI.",
+          "status": "Tested",
+          "score": 93,
+          "test": {
+            "date": "2026-10-23",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Qwen Code 0.26.0",
+            "model": "gemini-3.8-flash (Gemini API free tier)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 23,
+              "speed_effort": 11,
+              "cost_free_tier": 10,
+              "developer_experience": 9
+            },
+            "evidence": "Passed 10/10 automated checks with no interventions on the Gemini API free tier and ended with a clear summary, but took 18 minutes: Gemini was slow and returned 6 'high demand' errors (Qwen Code retried them itself), and the agent spent 4 extra requests reading files that did not exist yet. Quality 23: clean IIFE, validates saved data, try/catch on storage, textContent rendering, correct README. -1 the text input has no label (placeholder only); -1 checkbox and delete labels don't name the task. -4 speed: 18 minutes against the 5-minute target. -1 DX: needs Node 22+ and a hand-written settings file to use a Gemini key headlessly."
+          }
+        },
+        {
           "name": "Claude Code",
           "url": "https://www.anthropic.com/claude-code",
           "free_tier": "No",
@@ -268,6 +291,30 @@
     }
   ],
   "new_this_week": [
+    {
+      "name": "Halv",
+      "url": "https://halv.ai",
+      "description": "Desktop workspace that runs Claude Code, Codex, Kimi and GLM side by side on the plans you already pay for, with a local proxy that trims context tokens and a live savings meter. The app and its local engine went open source (Apache-2.0) on Oct 22; only the optional Halv Cloud router is paid. macOS first; Show HN Oct 22.",
+      "found": "2026-10-23"
+    },
+    {
+      "name": "Recursive Flint + rec",
+      "url": "https://github.com/recursive-oss/rec",
+      "description": "Flint is a local coding model from Recursive with open weights on Hugging Face (Apache-2.0); rec is its Apache-2.0 inference engine with ready-made launchers for Pi and OpenCode. Needs an Apple Silicon M4 Pro/M5 Pro/M5 Max with 48 GB+ memory. Released Oct 21.",
+      "found": "2026-10-23"
+    },
+    {
+      "name": "Rossark Motion skill",
+      "url": "https://github.com/rossark0/rossark-motion-skill",
+      "description": "Claude Code skill that turns any SVG drawing into a smooth 60 fps animation (breathing, blinking, full-body acting, whole scenes) in React Native and SwiftUI. Handy for app and game illustrations. MIT; created Oct 22, trending on GitHub.",
+      "found": "2026-10-23"
+    },
+    {
+      "name": "3D Model Anything (Wes Bos)",
+      "url": "https://github.com/wesbos/3d-model-anything",
+      "description": "iPhone LiDAR + photo capture app, a Three.js viewer and a scan-to-threejs agent skill that guides a coding agent through rebuilding a real room as an editable 3D scene. Good fit for game devs and Three.js tinkerers. Code MIT (demo assets under a separate license); created Oct 21.",
+      "found": "2026-10-23"
+    },
     {
       "name": "Omnara",
       "url": "https://github.com/omnara-ai/omnara",
