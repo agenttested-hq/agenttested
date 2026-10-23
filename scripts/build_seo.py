@@ -82,6 +82,25 @@ ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"]
      **({"review": {"@type": "Review", "author": {"@type": "Organization", "name": "AgentTested"}, "datePublished": t["test"]["date"],
         "reviewRating": {"@type": "Rating", "ratingValue": t["score"], "bestRating": 100, "worstRating": 0}, "reviewBody": t["test"]["evidence"]}} if t.get("score") is not None else {})}} for i, t in enumerate(lb["tools"])]}
 
+# Analytics (GoatCounter, cookieless) and Google Search Console verification.
+# Values live in data/site_config.json; empty values inject nothing.
+_cfg = json.loads((ROOT / "data/site_config.json").read_text()) if (ROOT / "data/site_config.json").exists() else {}
+_gc = re.sub(r"[^a-z0-9-]", "", str(_cfg.get("goatcounter_code", "")).strip().lower())
+_gsv = re.sub(r"[^A-Za-z0-9_-]", "", str(_cfg.get("google_site_verification", "")).strip())
+
+def add_head_extras(s, home=False):
+    s = re.sub(r'<!--analytics-->.*?<!--/analytics-->', '', s, flags=re.S)
+    extra = ""
+    if home and _gsv:
+        extra += f'<meta name="google-site-verification" content="{_gsv}">'
+    if _gc:
+        extra += f'<script data-goatcounter="https://{_gc}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
+    return s.replace('</head>', f'<!--analytics-->{extra}<!--/analytics--></head>', 1) if extra else s
+
+_nf = ROOT / "404.html"
+if _nf.exists():
+    _nf.write_text(add_head_extras(_nf.read_text()))
+
 for p, title in pages.items():
     f = ROOT / (p or "index.html")
     s = f.read_text()
@@ -101,5 +120,6 @@ for p, title in pages.items():
         s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)
     s = re.sub(r'<span id="upd">.*?</span>', f'<span id="upd">{upd}</span>', s)
+    s = add_head_extras(s, home=(p == ""))
     f.write_text(s)
 print("ok")
