@@ -87,12 +87,15 @@ ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"]
 _cfg = json.loads((ROOT / "data/site_config.json").read_text()) if (ROOT / "data/site_config.json").exists() else {}
 _gc = re.sub(r"[^a-z0-9-]", "", str(_cfg.get("goatcounter_code", "")).strip().lower())
 _gsv = re.sub(r"[^A-Za-z0-9_-]", "", str(_cfg.get("google_site_verification", "")).strip())
+_isv = re.sub(r"[^A-Za-z0-9-]", "", str(_cfg.get("impact_site_verification", "")).strip())
 
 def add_head_extras(s, home=False):
     s = re.sub(r'<!--analytics-->.*?<!--/analytics-->', '', s, flags=re.S)
     extra = ""
     if home and _gsv:
         extra += f'<meta name="google-site-verification" content="{_gsv}">'
+    if home and _isv:
+        extra += f"<meta name='impact-site-verification' value='{_isv}'>"
     if _gc:
         extra += f'<script data-goatcounter="https://{_gc}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
     return s.replace('</head>', f'<!--analytics-->{extra}<!--/analytics--></head>', 1) if extra else s
