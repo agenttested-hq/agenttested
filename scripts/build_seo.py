@@ -72,15 +72,27 @@ nw_html = "".join(nw_card(t) for t in _nw)
 # "Quick answer" card on the leaderboard: plain-language picks generated from the data, for readers and AI assistants.
 _os = [t for t in _sc if "open source" in t["pricing"].lower()]
 _hi = [t for t in _sc if t["score"] == _sc[0]["score"]]
+# "No model key needed" = tested on the tool's own free account or built-in free model (not a bring-your-own API key).
+_nokey = [t for t in _sc if "api free tier" not in t["test"]["model"].lower()]
+_nokey_txt = ", ".join(f"{e(t['name'])} {t['score']}" for t in _nokey)
 quick_html = ('<b>Quick answer</b><ul class="mut">'
     + f'<li>Highest score so far: {" and ".join(e(t["name"]) for t in _hi)}, {_sc[0]["score"]}/100.</li>'
     + (f'<li>Best open-source agent so far: {e(_os[0]["name"])}, {_os[0]["score"]}/100; you bring your own model key.</li>' if _os else '')
+    + (f'<li>No model key needed: {_nokey_txt} ran on a free account or a built-in free model. The others are bring-your-own-key (we used the free Gemini API tier).</li>' if _nokey else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
 ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"], "itemListElement": [
     {"@type": "ListItem", "position": i + 1, "item": {"@type": "SoftwareApplication", "name": t["name"], "url": t["url"],
      "applicationCategory": "DeveloperApplication", "description": t["description"],
      **({"review": {"@type": "Review", "author": {"@type": "Organization", "name": "AgentTested"}, "datePublished": t["test"]["date"],
         "reviewRating": {"@type": "Rating", "ratingValue": t["score"], "bestRating": 100, "worstRating": 0}, "reviewBody": t["test"]["evidence"]}} if t.get("score") is not None else {})}} for i, t in enumerate(lb["tools"])]}
+
+_faq = [("What is the best AI coding agent right now?", f'In our tests the highest score so far is {" and ".join(t["name"] for t in _hi)} with {_sc[0]["score"]}/100, out of {len(_sc)} agents tested on the same task and rubric (data updated {upd}).')]
+if _os:
+    _faq.append(("What is the best open-source AI coding agent?", f'{_os[0]["name"]} scored {_os[0]["score"]}/100, the highest open-source agent in our tests; you bring your own model key.'))
+if _nokey:
+    _faq.append(("Which AI coding agents work without an API key?", "Of the agents we scored, " + ", ".join(f'{t["name"]} ({t["score"]})' for t in _nokey) + " ran on a free account or a built-in free model with no API key. The others need your own model key; we used the free Gemini API tier."))
+faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+    {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]}
 
 # Analytics (GoatCounter, cookieless) and Google Search Console verification.
 # Values live in data/site_config.json; empty values inject nothing.
@@ -116,6 +128,7 @@ for p, title in pages.items():
             f'<meta name="twitter:card" content="summary">')
     if p == "leaderboard.html":
         meta += '<script type="application/ld+json">' + json.dumps(ld) + '</script>'
+        meta += '<script type="application/ld+json">' + json.dumps(faq_ld) + '</script>'
         s = re.sub(r'<p id="lbnote">.*?</p>', f'<p id="lbnote">{e(lb["note"])}</p>', s, flags=re.S)
         s = re.sub(r'<tbody id="lb">.*?</tbody>', f'<tbody id="lb">{rows}</tbody>', s, flags=re.S)
         s = re.sub(r'<div class="card" id="quick">.*?</div>(?=\n<div class="card warn">)', lambda m: f'<div class="card" id="quick">{quick_html}</div>', s, count=1, flags=re.S)

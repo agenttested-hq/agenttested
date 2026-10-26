@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-23",
+  "updated": "2026-10-26",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-23 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-26 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -97,6 +97,29 @@
               "developer_experience": 9
             },
             "evidence": "Passed 10/10 automated checks in 37 s with 1 prompt and no interventions on a free Cursor account (the web Cloud Agents need Premium; the CLI did not). -1 quality: task IDs use crypto.randomUUID(), which fails outside secure contexts (e.g. plain http on a LAN IP). -1: the checkbox accessibility label is always 'Mark task complete'. -1 DX: separate browser login step."
+          }
+        },
+        {
+          "name": "Kilo Code",
+          "url": "https://kilo.ai/",
+          "free_tier": "Yes",
+          "pricing": "Free, open source (MIT) for individuals; free models via Auto Free with no account, or pay as you go, bring your own key, or Kilo Pass; Teams $15/user/month",
+          "description": "Open-source agentic coding assistant for VS Code, JetBrains and the terminal (Kilo CLI), with a gateway to 500+ models including free ones you can use without signing in.",
+          "status": "Tested",
+          "score": 96,
+          "test": {
+            "date": "2026-10-26",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Kilo CLI 7.8.18",
+            "model": "Kilo Auto Free (routed to reflection/beam; no account, no API key)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 22,
+              "speed_effort": 15,
+              "cost_free_tier": 10,
+              "developer_experience": 9
+            },
+            "evidence": "Passed 10/10 automated checks in 11 s with no interventions, no sign-in, no API key and no card, using Kilo's Auto Free model (which picked reflection/beam on test day). -1 quality: an unused escapeHtml helper left in the code. -1: the checkbox has no accessible label. -1: the delete button just says 'Delete' and doesn't name the task. -1 DX: the final summary was just 'Done.'. Note: Auto Free chooses the model for you and can change over time, and Kilo says it may route to providers that log prompts, so don't use it for private code."
           }
         },
         {
@@ -291,6 +314,42 @@
     }
   ],
   "new_this_week": [
+    {
+      "name": "Corgi",
+      "url": "https://corgi.computer/",
+      "description": "Terminal multiplexer for humans and coding agents (Claude Code, Codex, Pi, OpenCode): shows which agent is working or needs you, keeps sessions running like tmux, tracks tokens and file changes. MIT (tals/corgi); Show HN Oct 23 (138 pts). macOS, Linux, WSL.",
+      "found": "2026-10-26"
+    },
+    {
+      "name": "Farol",
+      "url": "https://winnin.github.io/farol/",
+      "description": "Free, open-source CLI and GitHub Action that maps the risk of a pull request after AI review: riskiest files, what they reach, diff coverage and contract breaks (TS/React, Go, Python). MIT (winnin/farol); Show HN Oct 25.",
+      "found": "2026-10-26"
+    },
+    {
+      "name": "AgentValley",
+      "url": "https://agentvalley.app",
+      "description": "Free macOS notch app that shows every Claude Code session and sub-agent at a glance (model, working or waiting on you), each with a pixel programmer. MIT (morsechimwai/agent-valley); Product Hunt #4 on Oct 24.",
+      "found": "2026-10-26"
+    },
+    {
+      "name": "tstack (Theo / t3dotgg)",
+      "url": "https://github.com/t3dotgg/tstack",
+      "description": "Theo's everyday agent skills for Claude Code and Codex: full-send PR flow, multi-model 'council' review, babysit-PR through CI, take over someone else's PR. MIT; published Oct 24. Needs an authenticated gh CLI.",
+      "found": "2026-10-26"
+    },
+    {
+      "name": "BeautifulRust",
+      "url": "https://github.com/morganlinton/BeautifulRust",
+      "description": "Claude Code plugin that teaches Claude to write idiomatic, robust Rust. MIT; created Oct 23, 900+ stars in its first days.",
+      "found": "2026-10-26"
+    },
+    {
+      "name": "xss-audit skill",
+      "url": "https://github.com/songjianyang/xss-audit",
+      "description": "Agent skill that runs a 14-layer static XSS audit on React, TypeScript and JavaScript projects. MIT; created Oct 24. A useful second check on AI-written front-end code.",
+      "found": "2026-10-26"
+    },
     {
       "name": "Halv",
       "url": "https://halv.ai",
