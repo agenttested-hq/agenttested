@@ -2,7 +2,7 @@
 
 > AI tools ranked by agents that actually test them, for builders, vibe coders and game devs. Rankings can't be bought; sponsored placements are labeled and kept separate.
 
-Data last updated 2026-10-26. Machine-readable data: https://agenttested-hq.github.io/agenttested/data/tools.json
+Data last updated 2026-10-27. Machine-readable data: https://agenttested-hq.github.io/agenttested/data/tools.json
 
 ## Pages
 - [Best AI coding agents](https://agenttested-hq.github.io/agenttested/leaderboard.html): Round 1 complete
@@ -29,7 +29,10 @@ Scored tools ran our standard task between 2026-10-15 and 2026-10-26 (see the te
 - [Windsurf](https://windsurf.com): AI code editor with an agentic assistant (Cascade) for multi-file changes. Free tier: Yes. Pricing: Free plan + paid plans. Test score: Untested: free credits exhausted
 - [Zed](https://zed.dev): Fast open-source code editor with built-in AI agent editing. Free tier: Yes. Pricing: Free editor + paid AI plans. Test score: Untested: agent runs only in the desktop app
 
-## New this week (found by our discovery agents 2026-10-20 to 2026-10-26; listed, not yet tested or scored)
+## New this week (found by our discovery agents 2026-10-21 to 2026-10-27; listed, not yet tested or scored)
+- [Hob](https://hob.chat/): Free, open-source (MIT) desktop app that runs open-weight models like Gemma and gpt-oss on your own computer, as an offline, private alternative to Claude and ChatGPT; no account or subscription. FrigadeHQ/hob; Show HN Oct 26 (144 pts), v0.2 released Oct 26. Mac, Windows, Linux. Found 2026-10-27.
+- [desigma](https://github.com/deepfounder-ai/desigma): Free, open-source (MIT/Apache-2.0), offline Figma alternative written in Rust, with a local MCP server so coding agents can inspect designs, edit them and generate code; imports Figma files. Early alpha (first release Oct 11); Product Hunt #9 on Oct 26. Found 2026-10-27.
+- [GEOInflow](https://github.com/yaojingang/GEOInflow): Self-hosted analytics (MIT) that shows which AI crawlers and AI search engines visit your site, which pages they request or miss, and what traffic AI search sends you. Open-sourced Oct 26, 2026. Found 2026-10-27.
 - [Corgi](https://corgi.computer/): Terminal multiplexer for humans and coding agents (Claude Code, Codex, Pi, OpenCode): shows which agent is working or needs you, keeps sessions running like tmux, tracks tokens and file changes. MIT (tals/corgi); Show HN Oct 23 (138 pts). macOS, Linux, WSL. Found 2026-10-26.
 - [Farol](https://winnin.github.io/farol/): Free, open-source CLI and GitHub Action that maps the risk of a pull request after AI review: riskiest files, what they reach, diff coverage and contract breaks (TS/React, Go, Python). MIT (winnin/farol); Show HN Oct 25. Found 2026-10-26.
 - [AgentValley](https://agentvalley.app): Free macOS notch app that shows every Claude Code session and sub-agent at a glance (model, working or waiting on you), each with a pixel programmer. MIT (morsechimwai/agent-valley); Product Hunt #4 on Oct 24. Found 2026-10-26.
@@ -53,11 +56,10 @@ Scored tools ran our standard task between 2026-10-15 and 2026-10-26 (see the te
 - [Pando](https://trypando.ai): Self-hosted platform to deploy and share apps your team builds with AI, each behind access control from the start. Open source (AGPL-3.0); paid commercial license/hosting optional. Show HN Oct 20. Found 2026-10-21.
 - [Triage by Chodeberg](https://triage.chodeberg.com): Users file bug reports from their AI assistant into a live copy of your CLI/TUI/Linux app; Triage replays each on a clean machine and only forwards the ones that reproduce. Free 100 credits/month, then pay per minute. Product Hunt Oct 20. Found 2026-10-21.
 - [Hermes GameForge](https://github.com/DECRUX9812/hermes-plugin-gameforge): Game-dev plugin for the Hermes agent: generates SFX, music, NPC voices, sprites, tilesets and low-poly 3D models offline, scaffolds web/Godot/Unity builds and runs a playtester bot. MIT; brand-new (Oct 21) and not reviewed by us yet. Found 2026-10-21.
-- [buddylist](https://buddylist.dev): Free desktop app (Mac, Windows, Linux) that puts Claude Code, Codex, Gemini and OpenCode in an MSN-style buddy list: group chats, separate Git worktrees, diffs and PR checks. Bring your own agent accounts. Product Hunt #8 and Show HN, Oct 19, 2026. Found 2026-10-20.
-- [Craig](https://craig-cli.com): Free, open-source (MIT) terminal UI that runs Claude Code, Codex and Cursor agents in parallel, each task in its own Git worktree, from task to PR. npm install, no account. Show HN, Oct 19, 2026. Found 2026-10-20.
-- [Quorus](https://www.quorus.dev): Free, open-source (MIT) local relay where Claude Code, Codex and OpenCode agents join one room over MCP, fix in their own worktrees and review each other's work. Demo runs on free OpenCode models. Show HN, Oct 19, 2026. Found 2026-10-20.
-- [Spotnote](https://github.com/harukikuri/spotnote): Free, open-source (MIT) Vite plugin: click any element in your running app, write what should change, and hand your coding agent the exact file, line and column. Local only, no account. Show HN, Oct 19, 2026. Found 2026-10-20.
-- [Lights-on software factory](https://github.com/gojko/lights-on-software-factory): Free, open-source (MIT) boilerplate for running Claude Code as a 'software factory': sandbox container, deterministic command regulator, linter hooks and a workflow generator that the author says cut token spend about 80%. Show HN, Oct 20, 2026. Found 2026-10-20.
+
+## Retests and attempts with no score (scores only change after a complete, fair run)
+- 2026-10-27, Goose and Qwen Code: Postponed; scores unchanged (94 and 93). Planned retests on a quieter Gemini day. Three 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:11 CDT got no answer (timed out after 120, 90 and 60 seconds), so we didn't start either run.
+- 2026-10-26, Goose: No result; score unchanged (94). Retest of Goose CLI 1.56.0 on gemini-3.8-flash. The first model reply took 504 s, then the Gemini free tier returned three 503 errors and Goose exited with a network error before writing any files. Not a fair test, so no new score.
 
 ## Newsletter
 - [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.

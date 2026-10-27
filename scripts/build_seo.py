@@ -44,6 +44,11 @@ _nw = sorted((t for t in d.get("new_this_week", []) if str(t.get("found", "")) >
 if _nw:
     lines += ["", f"## New this week (found by our discovery agents {_nw_cut} to {upd}; listed, not yet tested or scored)"]
     lines += [f"- [{t['name']}]({t['url']}): {t['description']} Found {t.get('found', 'n/a')}." for t in _nw]
+# Retest and failed-attempt log: shown on tests.html and in llms.txt so readers see runs that produced no score.
+_att = sorted(lb.get("attempts", []), key=lambda a: a["date"], reverse=True)
+if _att:
+    lines += ["", "## Retests and attempts with no score (scores only change after a complete, fair run)"]
+    lines += [f"- {a['date']}, {a['tool']}: {a['result']}. {a['note']}" for a in _att]
 lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))
 
@@ -80,6 +85,8 @@ quick_html = ('<b>Quick answer</b><ul class="mut">'
     + (f'<li>Best open-source agent so far: {e(_os[0]["name"])}, {_os[0]["score"]}/100; you bring your own model key.</li>' if _os else '')
     + (f'<li>No model key needed: {_nokey_txt} ran on a free account or a built-in free model. The others are bring-your-own-key (we used the free Gemini API tier).</li>' if _nokey else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
+att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p><ul class="mut">'
+    + "".join(f'<li><b>{e(a["date"])}, {e(a["tool"])}:</b> {e(a["result"])}. {e(a["note"])}</li>' for a in _att) + '</ul>')
 ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"], "itemListElement": [
     {"@type": "ListItem", "position": i + 1, "item": {"@type": "SoftwareApplication", "name": t["name"], "url": t["url"],
      "applicationCategory": "DeveloperApplication", "description": t["description"],
@@ -132,6 +139,8 @@ for p, title in pages.items():
         s = re.sub(r'<p id="lbnote">.*?</p>', f'<p id="lbnote">{e(lb["note"])}</p>', s, flags=re.S)
         s = re.sub(r'<tbody id="lb">.*?</tbody>', f'<tbody id="lb">{rows}</tbody>', s, flags=re.S)
         s = re.sub(r'<div class="card" id="quick">.*?</div>(?=\n<div class="card warn">)', lambda m: f'<div class="card" id="quick">{quick_html}</div>', s, count=1, flags=re.S)
+    if p == "tests.html" and _att:
+        s = re.sub(r'<div class="card" id="attempts">.*?</div>', lambda m: f'<div class="card" id="attempts">{att_html}</div>', s, count=1, flags=re.S)
     if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
         s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)

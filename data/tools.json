@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26",
+  "updated": "2026-10-27",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -310,10 +310,42 @@
           "score": null
         }
       ],
-      "model_note": "Model differs between tools and affects scores."
+      "model_note": "Model differs between tools and affects scores.",
+      "attempts": [
+        {
+          "tool": "Goose",
+          "date": "2026-10-26",
+          "result": "No result; score unchanged (94)",
+          "note": "Retest of Goose CLI 1.56.0 on gemini-3.8-flash. The first model reply took 504 s, then the Gemini free tier returned three 503 errors and Goose exited with a network error before writing any files. Not a fair test, so no new score."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-10-27",
+          "result": "Postponed; scores unchanged (94 and 93)",
+          "note": "Planned retests on a quieter Gemini day. Three 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:11 CDT got no answer (timed out after 120, 90 and 60 seconds), so we didn't start either run."
+        }
+      ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Hob",
+      "url": "https://hob.chat/",
+      "description": "Free, open-source (MIT) desktop app that runs open-weight models like Gemma and gpt-oss on your own computer, as an offline, private alternative to Claude and ChatGPT; no account or subscription. FrigadeHQ/hob; Show HN Oct 26 (144 pts), v0.2 released Oct 26. Mac, Windows, Linux.",
+      "found": "2026-10-27"
+    },
+    {
+      "name": "desigma",
+      "url": "https://github.com/deepfounder-ai/desigma",
+      "description": "Free, open-source (MIT/Apache-2.0), offline Figma alternative written in Rust, with a local MCP server so coding agents can inspect designs, edit them and generate code; imports Figma files. Early alpha (first release Oct 11); Product Hunt #9 on Oct 26.",
+      "found": "2026-10-27"
+    },
+    {
+      "name": "GEOInflow",
+      "url": "https://github.com/yaojingang/GEOInflow",
+      "description": "Self-hosted analytics (MIT) that shows which AI crawlers and AI search engines visit your site, which pages they request or miss, and what traffic AI search sends you. Open-sourced Oct 26, 2026.",
+      "found": "2026-10-27"
+    },
     {
       "name": "Corgi",
       "url": "https://corgi.computer/",
