@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-26 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-28 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -28,6 +28,29 @@
               "developer_experience": 10
             },
             "evidence": "Passed 10/10 automated checks in 38 s with no interventions on Copilot Free. -1 quality: the checkbox accessibility label always says 'Mark as complete', even for completed tasks."
+          }
+        },
+        {
+          "name": "OpenCode",
+          "url": "https://opencode.ai",
+          "free_tier": "Yes",
+          "pricing": "Free, open source; free models included, or bring your own model provider",
+          "description": "Open-source AI coding agent for the terminal, IDE and desktop, with built-in free models.",
+          "status": "Tested",
+          "score": 98,
+          "test": {
+            "date": "2026-10-28",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "OpenCode CLI 1.19.5",
+            "model": "deepseek-v4.1-flash-free (OpenCode built-in free model, no account)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 24,
+              "speed_effort": 15,
+              "cost_free_tier": 10,
+              "developer_experience": 9
+            },
+            "evidence": "Retest (first test Oct 19 on 1.19.3 scored 93). Passed 10/10 automated checks in 96 s on the first try, with no interventions, no sign-in and no card. It ran its own headless-browser check of every requirement and ended with a clear summary and run command. -1 quality: the checkbox accessibility label doesn't name the task. -1 DX: the Oct 19 setup issues (with no model set it auto-picks a provider from unrelated tokens in the environment, and 'opencode run' waits on open stdin) weren't re-checked, so that point stays deducted."
           }
         },
         {
@@ -217,29 +240,6 @@
           }
         },
         {
-          "name": "OpenCode",
-          "url": "https://opencode.ai",
-          "free_tier": "Yes",
-          "pricing": "Free, open source; free models included, or bring your own model provider",
-          "description": "Open-source AI coding agent for the terminal, IDE and desktop, with built-in free models.",
-          "status": "Tested",
-          "score": 93,
-          "test": {
-            "date": "2026-10-19",
-            "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "OpenCode CLI 1.19.3",
-            "model": "deepseek-v4.1-flash-free (OpenCode built-in free model, no account)",
-            "breakdown": {
-              "task_success": 40,
-              "output_quality": 23,
-              "speed_effort": 12,
-              "cost_free_tier": 10,
-              "developer_experience": 8
-            },
-            "evidence": "Passed 10/10 automated checks; the successful run took 20 s with no sign-in and no card. First try on the big-pickle free model returned 'Rate limit exceeded', so we re-ran on another built-in free model (counts as 1 intervention, -3 speed). -1 quality: README says to visit localhost:8000 after 'npx serve .', which serves on port 3000. -1: the checkbox accessibility label is always 'Mark task complete'. -2 DX: with no model set it auto-picked a provider it had no credentials for (an unrelated Cloudflare token on our test machine), and 'opencode run' hung when stdin was left open; the final summary was one line."
-          }
-        },
-        {
           "name": "Qwen Code",
           "url": "https://github.com/QwenLM/qwen-code",
           "free_tier": "Yes",
@@ -323,11 +323,35 @@
           "date": "2026-10-27",
           "result": "Postponed; scores unchanged (94 and 93)",
           "note": "Planned retests on a quieter Gemini day. Three 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:11 CDT got no answer (timed out after 120, 90 and 60 seconds), so we didn't start either run."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-10-28",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Four 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:08 CDT: two returned 503 'high demand' errors and two timed out after 90 seconds, so we didn't start either run (third morning in a row). We retested OpenCode instead, which needs no model key."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Our Silly Games",
+      "url": "https://oursilly.games",
+      "description": "Make a browser game by chatting with Claude Code or Codex, then publish it with free hosting, realtime multiplayer and leaderboards. MIT plugin (kirkness/osg-plugin) with 11 game-making skills; publishing needs a free Our Silly Games sign-in. Product Hunt Oct 27, 2026.",
+      "found": "2026-10-28"
+    },
+    {
+      "name": "trompe + anymove (patch.gg)",
+      "url": "https://github.com/patch-gg/trompe",
+      "description": "Two Apache-2.0 game-art pipelines from patch.gg: trompe textures a whole gray-box game level with image models (glTF out), and anymove (github.com/patch-gg/anymove) turns one AI video into a GLB animation for any rigged creature. Code is free; the image/video models run on paid APIs (their demo level cost about $4.44 on fal). Released Oct 25 and 27, 2026.",
+      "found": "2026-10-28"
+    },
+    {
+      "name": "Nyxis",
+      "url": "https://github.com/NyxFoundation/nyxis",
+      "description": "Lean backend framework for apps written by AI agents: you write and approve Cedar authorization policies, the agent writes handlers, and every build checks a formal proof that no request sequence can leak or modify data beyond permissions. MIT, v0.1, under active development. Created Oct 26, 2026.",
+      "found": "2026-10-28"
+    },
     {
       "name": "Hob",
       "url": "https://hob.chat/",

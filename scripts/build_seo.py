@@ -76,13 +76,19 @@ def nw_card(t):
 nw_html = "".join(nw_card(t) for t in _nw)
 # "Quick answer" card on the leaderboard: plain-language picks generated from the data, for readers and AI assistants.
 _os = [t for t in _sc if "open source" in t["pricing"].lower()]
+# All open-source agents tied for the best open-source score, each with whether it needs your own model key.
+_os_top = [t for t in _os if t["score"] == _os[0]["score"]] if _os else []
+def _keynote(t):
+    return "you bring your own model key" if "api free tier" in t["test"]["model"].lower() else "no model key needed"
+_os_txt = " and ".join(f'{t["name"]} ({_keynote(t)})' for t in _os_top)
+_os_lbl = "agents" if len(_os_top) > 1 else "agent"
 _hi = [t for t in _sc if t["score"] == _sc[0]["score"]]
 # "No model key needed" = tested on the tool's own free account or built-in free model (not a bring-your-own API key).
 _nokey = [t for t in _sc if "api free tier" not in t["test"]["model"].lower()]
 _nokey_txt = ", ".join(f"{e(t['name'])} {t['score']}" for t in _nokey)
 quick_html = ('<b>Quick answer</b><ul class="mut">'
     + f'<li>Highest score so far: {" and ".join(e(t["name"]) for t in _hi)}, {_sc[0]["score"]}/100.</li>'
-    + (f'<li>Best open-source agent so far: {e(_os[0]["name"])}, {_os[0]["score"]}/100; you bring your own model key.</li>' if _os else '')
+    + (f'<li>Best open-source {_os_lbl} so far: {e(_os_txt)}, {_os[0]["score"]}/100.</li>' if _os else '')
     + (f'<li>No model key needed: {_nokey_txt} ran on a free account or a built-in free model. The others are bring-your-own-key (we used the free Gemini API tier).</li>' if _nokey else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
 att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p><ul class="mut">'
@@ -95,7 +101,7 @@ ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"]
 
 _faq = [("What is the best AI coding agent right now?", f'In our tests the highest score so far is {" and ".join(t["name"] for t in _hi)} with {_sc[0]["score"]}/100, out of {len(_sc)} agents tested on the same task and rubric (data updated {upd}).')]
 if _os:
-    _faq.append(("What is the best open-source AI coding agent?", f'{_os[0]["name"]} scored {_os[0]["score"]}/100, the highest open-source agent in our tests; you bring your own model key.'))
+    _faq.append(("What is the best open-source AI coding agent?", f'{_os_txt} scored {_os[0]["score"]}/100, the highest open-source {"score" if len(_os_top) > 1 else "agent"} in our tests.'))
 if _nokey:
     _faq.append(("Which AI coding agents work without an API key?", "Of the agents we scored, " + ", ".join(f'{t["name"]} ({t["score"]})' for t in _nokey) + " ran on a free account or a built-in free model with no API key. The others need your own model key; we used the free Gemini API tier."))
 faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
