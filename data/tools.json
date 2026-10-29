@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -50,7 +50,7 @@
               "cost_free_tier": 10,
               "developer_experience": 9
             },
-            "evidence": "Retest (first test Oct 19 on 1.19.3 scored 93). Passed 10/10 automated checks in 96 s on the first try, with no interventions, no sign-in and no card. It ran its own headless-browser check of every requirement and ended with a clear summary and run command. -1 quality: the checkbox accessibility label doesn't name the task. -1 DX: the Oct 19 setup issues (with no model set it auto-picks a provider from unrelated tokens in the environment, and 'opencode run' waits on open stdin) weren't re-checked, so that point stays deducted."
+            "evidence": "Retest (first test Oct 19 on 1.19.3 scored 93). Passed 10/10 automated checks in 96 s on the first try, with no interventions, no sign-in and no card. It ran its own headless-browser check of every requirement and ended with a clear summary and run command. -1 quality: the checkbox accessibility label doesn't name the task. -1 DX: the Oct 19 setup issues are still there in 1.19.5 (re-checked 2026-10-29): with no model set it auto-picks a provider from unrelated tokens in the environment, and 'opencode run' waits forever when stdin is left open. Pass -m and close stdin in scripts."
           }
         },
         {
@@ -329,11 +329,35 @@
           "date": "2026-10-28",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Four 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:08 CDT: two returned 503 'high demand' errors and two timed out after 90 seconds, so we didn't start either run (third morning in a row). We retested OpenCode instead, which needs no model key."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-10-29",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Four 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:11 CDT: one answered after 84 seconds and three timed out after 90 seconds, so we didn't start either run (fourth morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test at that speed."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Floorplan",
+      "url": "https://github.com/haydenschmitty/floorplan",
+      "description": "Claude Code / Codex plugin that reads your codebase and draws an interactive, plain-English map of every part, file and web request, then shows which parts the agent touched after each change. MIT, zero dependencies, runs locally with no telemetry; questions go through your own Claude or Codex account. Live demo at haydenschmitty.github.io/floorplan-demo. Created Oct 27, 2026 (v0.2.2 Oct 29).",
+      "found": "2026-10-29"
+    },
+    {
+      "name": "MCode Stack (MiniMax)",
+      "url": "https://github.com/MiniMax-AI/mcode-stack",
+      "description": "The MiniMax Code team's own open-sourced workflows: 17 SKILL.md skills and checklists (independent review, subagent-split check, long-session check, small PRs, tool-budget audit and more). MIT; installs as a plugin marketplace in Claude Code or Codex, or copies into ~/.agents/skills. Released Oct 28, 2026.",
+      "found": "2026-10-29"
+    },
+    {
+      "name": "DevBox (RudderStack)",
+      "url": "https://github.com/rudderlabs/devbox",
+      "description": "Self-hosted autonomous engineering harness: hand it a ticket (CLI or Linear) and it plans, codes, runs tests, reviews its own diff and opens a draft PR, one sandbox per task with placeholder tokens swapped in by an egress proxy. MIT; runs on Docker Compose or Kubernetes with your own OpenAI or Anthropic key (model usage is billed by your provider). Open-sourced Oct 27, 2026.",
+      "found": "2026-10-29"
+    },
     {
       "name": "Our Silly Games",
       "url": "https://oursilly.games",

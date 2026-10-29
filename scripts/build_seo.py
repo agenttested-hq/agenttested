@@ -31,9 +31,12 @@ lines = [f"# AgentTested", "", f"> {DESC} Rankings can't be bought; sponsored pl
          f"Data last updated {upd}. Machine-readable data: {BASE}data/tools.json", "",
          "## Pages", f"- [Best AI coding agents]({BASE}leaderboard.html): {lb['status']}", f"- [Round 1 test write-up]({BASE}tests.html): standard task, checks and per-tool results", f"- [Methodology]({BASE}about.html): 100-point scoring rubric and no-pay-to-rank policy", "",
          f"## {lb['title']} ({lb['status']})", lb["note"], ""]
+# Per-tool model-key note, shared by llms.txt, leaderboard rows and the Quick answer.
+def key_line(t):
+    return "Bring your own model key (we used the free Gemini API tier)" if "api free tier" in t["test"]["model"].lower() else "No model key needed (free account or built-in free model)"
 for t in lb["tools"]:
     score = t.get("score")
-    sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {t['test']['evidence']}" if score is not None else t.get("status", "Not yet tested")
+    sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {key_line(t)}. {t['test']['evidence']}" if score is not None else t.get("status", "Not yet tested")
     lines.append(f"- [{t['name']}]({t['url']}): {t['description']} Free tier: {t['free_tier']}. Pricing: {t['pricing']}. Test score: {sc}")
 # "New this week" = finds from the 7 days up to the data date (updated and the 6 days before it).
 # Older finds stay in data/tools.json as an archive but are no longer shown or listed.
@@ -59,6 +62,7 @@ def score_cell(t):
         return f'<span class="mut">{e(t.get("status", "Not yet tested"))}</span>'
     x = t["test"]; b = " · ".join(f"{LBL[k]} {v}" for k, v in x["breakdown"].items())
     return (f'<b class="score">{t["score"]}</b><span class="mut">/100</span><div class="mut sm">{e(b)}</div>'
+            f'<div class="sm">{e(key_line(t))}</div>'
             f'<div class="mut sm">Tested {e(x["date"])} · {e(x["tool_version"])} · model: {e(x["model"])}</div>'
             f'<div class="mut sm">{e(x["evidence"])} <a href="tests.html">Details</a></div>')
 def ref_cell(t):
