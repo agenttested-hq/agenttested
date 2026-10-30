@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-28 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-30 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -16,9 +16,9 @@
           "score": 99,
           "status": "Tested",
           "test": {
-            "date": "2026-10-15",
+            "date": "2026-10-30",
             "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "GitHub Copilot CLI 1.0.98",
+            "tool_version": "GitHub Copilot CLI 1.0.105",
             "model": "gpt-6-luna (Copilot Free default)",
             "breakdown": {
               "task_success": 40,
@@ -27,7 +27,14 @@
               "cost_free_tier": 10,
               "developer_experience": 10
             },
-            "evidence": "Passed 10/10 automated checks in 38 s with no interventions on Copilot Free. -1 quality: the checkbox accessibility label always says 'Mark as complete', even for completed tasks."
+            "evidence": "Retest on the latest CLI (first test Oct 15 on 1.0.98 also scored 99). Passed 10/10 automated checks in 35 s with no interventions on Copilot Free (0.39 AI credits). It validated saved data, handled storage errors, labelled the input and named the task on the delete button, then ran its own syntax check and gave a clear summary. -1 quality: the checkbox accessibility label names the task but always says 'as complete', even for completed tasks.",
+            "history": [
+              {
+                "date": "2026-10-15",
+                "tool_version": "GitHub Copilot CLI 1.0.98",
+                "score": 99
+              }
+            ]
           }
         },
         {
@@ -50,7 +57,14 @@
               "cost_free_tier": 10,
               "developer_experience": 9
             },
-            "evidence": "Retest (first test Oct 19 on 1.19.3 scored 93). Passed 10/10 automated checks in 96 s on the first try, with no interventions, no sign-in and no card. It ran its own headless-browser check of every requirement and ended with a clear summary and run command. -1 quality: the checkbox accessibility label doesn't name the task. -1 DX: the Oct 19 setup issues are still there in 1.19.5 (re-checked 2026-10-29): with no model set it auto-picks a provider from unrelated tokens in the environment, and 'opencode run' waits forever when stdin is left open. Pass -m and close stdin in scripts."
+            "evidence": "Retest (first test Oct 19 on 1.19.3 scored 93). Passed 10/10 automated checks in 96 s on the first try, with no interventions, no sign-in and no card. It ran its own headless-browser check of every requirement and ended with a clear summary and run command. -1 quality: the checkbox accessibility label doesn't name the task. -1 DX: the Oct 19 setup issues are still there in 1.19.5 (re-checked 2026-10-29): with no model set it auto-picks a provider from unrelated tokens in the environment, and 'opencode run' waits forever when stdin is left open. Pass -m and close stdin in scripts.",
+            "history": [
+              {
+                "date": "2026-10-19",
+                "tool_version": "OpenCode CLI 1.19.3",
+                "score": 93
+              }
+            ]
           }
         },
         {
@@ -335,11 +349,35 @@
           "date": "2026-10-29",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Four 1-token test requests to gemini-3.8-flash on the free tier between 04:02 and 04:11 CDT: one answered after 84 seconds and three timed out after 90 seconds, so we didn't start either run (fourth morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test at that speed."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-10-30",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 04:04 and 04:14 CDT: the first answered after 47 seconds and the next four timed out after 90 seconds, so we didn't start either run (fifth morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test at that speed."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Video to Game (fal)",
+      "url": "https://github.com/lovisdotio/video-to-game",
+      "description": "Agent skill (Claude Code, Codex, Cursor, Gemini) that turns a short AI-generated gameplay video into a playable single-file Three.js browser game: it studies the frames, generates matching images, 3D models and sounds, then plays its own game to check it. MIT; 31 example games you can play. The skill is free, but asset generation runs on fal's paid API (the author reports about $6 per game).",
+      "found": "2026-10-30"
+    },
+    {
+      "name": "Grim Prompter (Jim Manico)",
+      "url": "https://github.com/jmanico/grim-prompter",
+      "description": "Threat modeling for AI coding agents from a well-known app-security trainer: run /threat-model in Claude Code or $threat-model in Codex for a read-only review with findings cited to file and line, plus a mode for reviewing a branch. 36 architecture workflows and 29 method prompts. MIT, free.",
+      "found": "2026-10-30"
+    },
+    {
+      "name": "Overtone captions",
+      "url": "https://github.com/lonthq/overtone-captions",
+      "description": "Caption files that re-cut themselves for 16:9 and 9:16 video, with a CLI and a video.js plugin. Re-cutting existing subtitles works offline with no key; transcription uses OpenAI/Azure keys or runs locally with whisper.cpp and Ollama. Handy for devlogs and trailers. MIT.",
+      "found": "2026-10-30"
+    },
     {
       "name": "Floorplan",
       "url": "https://github.com/haydenschmitty/floorplan",

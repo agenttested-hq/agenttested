@@ -34,9 +34,13 @@ lines = [f"# AgentTested", "", f"> {DESC} Rankings can't be bought; sponsored pl
 # Per-tool model-key note, shared by llms.txt, leaderboard rows and the Quick answer.
 def key_line(t):
     return "Bring your own model key (we used the free Gemini API tier)" if "api free tier" in t["test"]["model"].lower() else "No model key needed (free account or built-in free model)"
+# Earlier scores for retested tools ("history" in each test), shown on leaderboard rows and in llms.txt.
+def hist_txt(t):
+    h = t.get("test", {}).get("history") or []
+    return "; ".join(f'{x["score"]} on {x["date"]} ({x["tool_version"]})' for x in sorted(h, key=lambda x: x["date"]))
 for t in lb["tools"]:
     score = t.get("score")
-    sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {key_line(t)}. {t['test']['evidence']}" if score is not None else t.get("status", "Not yet tested")
+    sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {key_line(t)}. {t['test']['evidence']}" + (f" Earlier scores: {hist_txt(t)}." if hist_txt(t) else "") if score is not None else t.get("status", "Not yet tested")
     lines.append(f"- [{t['name']}]({t['url']}): {t['description']} Free tier: {t['free_tier']}. Pricing: {t['pricing']}. Test score: {sc}")
 # "New this week" = finds from the 7 days up to the data date (updated and the 6 days before it).
 # Older finds stay in data/tools.json as an archive but are no longer shown or listed.
@@ -64,6 +68,8 @@ def score_cell(t):
     return (f'<b class="score">{t["score"]}</b><span class="mut">/100</span><div class="mut sm">{e(b)}</div>'
             f'<div class="sm">{e(key_line(t))}</div>'
             f'<div class="mut sm">Tested {e(x["date"])} · {e(x["tool_version"])} · model: {e(x["model"])}</div>'
+            + (f'<div class="mut sm">Retested. Earlier: {e(hist_txt(t))}</div>' if hist_txt(t) else '')
+            +
             f'<div class="mut sm">{e(x["evidence"])} <a href="tests.html">Details</a></div>')
 def ref_cell(t):
     if not t.get("referral_url"):
