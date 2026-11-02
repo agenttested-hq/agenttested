@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-30",
+  "updated": "2026-11-02",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-10-30 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-02 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam on Oct 26 and reflection/beam-free on the Nov 2 retest), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26 and rechecked 2026-11-02).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -137,29 +137,6 @@
           }
         },
         {
-          "name": "Kilo Code",
-          "url": "https://kilo.ai/",
-          "free_tier": "Yes",
-          "pricing": "Free, open source (MIT) for individuals; free models via Auto Free with no account, or pay as you go, bring your own key, or Kilo Pass; Teams $15/user/month",
-          "description": "Open-source agentic coding assistant for VS Code, JetBrains and the terminal (Kilo CLI), with a gateway to 500+ models including free ones you can use without signing in.",
-          "status": "Tested",
-          "score": 96,
-          "test": {
-            "date": "2026-10-26",
-            "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "Kilo CLI 7.8.18",
-            "model": "Kilo Auto Free (routed to reflection/beam; no account, no API key)",
-            "breakdown": {
-              "task_success": 40,
-              "output_quality": 22,
-              "speed_effort": 15,
-              "cost_free_tier": 10,
-              "developer_experience": 9
-            },
-            "evidence": "Passed 10/10 automated checks in 11 s with no interventions, no sign-in, no API key and no card, using Kilo's Auto Free model (which picked reflection/beam on test day). -1 quality: an unused escapeHtml helper left in the code. -1: the checkbox has no accessible label. -1: the delete button just says 'Delete' and doesn't name the task. -1 DX: the final summary was just 'Done.'. Note: Auto Free chooses the model for you and can change over time, and Kilo says it may route to providers that log prompts, so don't use it for private code."
-          }
-        },
-        {
           "name": "Cline",
           "url": "https://cline.bot",
           "free_tier": "Yes",
@@ -251,6 +228,36 @@
               "developer_experience": 9
             },
             "evidence": "Passed 10/10 automated checks with no interventions on the Gemini API free tier. All four files were written within 18.5 minutes (6 model requests), but Gemini 'high demand' errors and slow responses meant Goose had not posted its final reply when our 20-minute timebox ended, so we scored the files present at the cutoff and counted the full 20 minutes. Quality 25: clean IIFE, validates saved data, try/catch on storage, textContent rendering, checkbox and delete labels that name the task and flip with its state. -5 speed: 20 minutes against the 5-minute target. -1 DX: no final summary before the cutoff."
+          }
+        },
+        {
+          "name": "Kilo Code",
+          "url": "https://kilo.ai/",
+          "free_tier": "Yes",
+          "pricing": "Free, open source (MIT) for individuals; free models via Auto Free with no account, or pay as you go, bring your own key, or Kilo Pass; Teams $15/user/month",
+          "description": "Open-source agentic coding assistant for VS Code, JetBrains and the terminal (Kilo CLI), with a gateway to 500+ models including free ones you can use without signing in.",
+          "status": "Tested",
+          "score": 94,
+          "test": {
+            "date": "2026-11-02",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Kilo CLI 7.8.18",
+            "model": "Kilo Auto Free (routed to reflection/beam-free; no account, no API key)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 20,
+              "speed_effort": 15,
+              "cost_free_tier": 10,
+              "developer_experience": 9
+            },
+            "evidence": "Retest on the same CLI version and the same Auto Free setting (first test Oct 26 scored 96). Passed 10/10 automated checks in 13 s with no interventions, no sign-in, no API key and no card; Auto Free picked reflection/beam-free this time. The app it wrote was weaker than on Oct 26: -1 quality: an unused escapeHtml helper again. -1: saved data is read with no error handling, so a corrupted localStorage value stops the whole app (we checked: nothing can be added). -1: no checkbox; you toggle a task by clicking its text, which can't be reached with the keyboard. -1: the text input has no label (placeholder only). -1: the delete button just says 'Delete'. -1 DX: the final summary was again just 'Done.'. Note: Auto Free chooses the model for you and can change over time, so results can vary between runs; Kilo says it may route to providers that log prompts, so don't use it for private code.",
+            "history": [
+              {
+                "date": "2026-10-26",
+                "tool_version": "Kilo CLI 7.8.18",
+                "score": 96
+              }
+            ]
           }
         },
         {
@@ -355,11 +362,35 @@
           "date": "2026-10-30",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 04:04 and 04:14 CDT: the first answered after 47 seconds and the next four timed out after 90 seconds, so we didn't start either run (fifth morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test at that speed."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-02",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Six 1-token test requests to gemini-3.8-flash on the free tier between 02:59 and 03:04 CST: five returned 503 'This model is currently experiencing high demand' and one timed out after 90 seconds, so we didn't start either run (sixth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "pixelfx (patch.gg)",
+      "url": "https://github.com/patch-gg/pixelfx",
+      "description": "244 pixel-art effects and animations for games (fire, explosions, magic, weather, UI, pickups, critters), each a small piece of code: play them in the browser gallery, recolor and mirror them, drop them into a browser game or export sprite sheets for Godot, Unity or any engine. Ships a Claude Code skill that drafts, renders, looks at and refines new effects. MIT, free; open-sourced Oct 30 and past 3,000 GitHub stars in two days. Live gallery at patch-gg.github.io/pixelfx.",
+      "found": "2026-11-02"
+    },
+    {
+      "name": "stack-diagram",
+      "url": "https://github.com/caru-ini/stack-diagram",
+      "description": "Agent skill for Claude Code, Codex, Cursor and other skills-compatible agents: describe your stack in one sentence and get an architecture diagram with the official vendor logos, as a single HTML file, PNG or React component. MIT, free, no account; it fetches logos from public icon libraries. It offers to post your diagram to a public gallery, but only if you say yes. Released Nov 1, 760+ stars in its first day.",
+      "found": "2026-11-02"
+    },
+    {
+      "name": "teardown",
+      "url": "https://github.com/elvarofficial/teardown",
+      "description": "Claude Code skill that turns any machine into an interactive 3D simulator you can take apart: ask how an engine, watch or excavator arm works and it builds one offline three.js page with live readouts and a guided tour, plus optional 60 fps video export. MIT, free skill (needs Node 20+; ffmpeg for video). Three example machines included. Created Oct 30, 1,000+ stars.",
+      "found": "2026-11-02"
+    },
     {
       "name": "Video to Game (fal)",
       "url": "https://github.com/lovisdotio/video-to-game",

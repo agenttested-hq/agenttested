@@ -38,9 +38,16 @@ def key_line(t):
 def hist_txt(t):
     h = t.get("test", {}).get("history") or []
     return "; ".join(f'{x["score"]} on {x["date"]} ({x["tool_version"]})' for x in sorted(h, key=lambda x: x["date"]))
+# Direction of the latest retest vs the previous score ("down 2 points", "up 5 points", "unchanged").
+def chg_txt(t):
+    h = t.get("test", {}).get("history") or []
+    if not h or t.get("score") is None:
+        return ""
+    diff = t["score"] - max(h, key=lambda x: x["date"])["score"]
+    return "unchanged" if diff == 0 else f'{"up" if diff > 0 else "down"} {abs(diff)} point{"s" if abs(diff) != 1 else ""}'
 for t in lb["tools"]:
     score = t.get("score")
-    sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {key_line(t)}. {t['test']['evidence']}" + (f" Earlier scores: {hist_txt(t)}." if hist_txt(t) else "") if score is not None else t.get("status", "Not yet tested")
+    sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {key_line(t)}. {t['test']['evidence']}" + (f" Earlier scores: {hist_txt(t)}; change since the previous test: {chg_txt(t)}." if hist_txt(t) else "") if score is not None else t.get("status", "Not yet tested")
     lines.append(f"- [{t['name']}]({t['url']}): {t['description']} Free tier: {t['free_tier']}. Pricing: {t['pricing']}. Test score: {sc}")
 # "New this week" = finds from the 7 days up to the data date (updated and the 6 days before it).
 # Older finds stay in data/tools.json as an archive but are no longer shown or listed.
@@ -68,7 +75,7 @@ def score_cell(t):
     return (f'<b class="score">{t["score"]}</b><span class="mut">/100</span><div class="mut sm">{e(b)}</div>'
             f'<div class="sm">{e(key_line(t))}</div>'
             f'<div class="mut sm">Tested {e(x["date"])} · {e(x["tool_version"])} · model: {e(x["model"])}</div>'
-            + (f'<div class="mut sm">Retested. Earlier: {e(hist_txt(t))}</div>' if hist_txt(t) else '')
+            + (f'<div class="mut sm">Retested. Earlier: {e(hist_txt(t))}. Change since the previous test: <b>{e(chg_txt(t))}</b>.</div>' if hist_txt(t) else '')
             +
             f'<div class="mut sm">{e(x["evidence"])} <a href="tests.html">Details</a></div>')
 def ref_cell(t):
@@ -95,11 +102,15 @@ _os_lbl = "agents" if len(_os_top) > 1 else "agent"
 _hi = [t for t in _sc if t["score"] == _sc[0]["score"]]
 # "No model key needed" = tested on the tool's own free account or built-in free model (not a bring-your-own API key).
 _nokey = [t for t in _sc if "api free tier" not in t["test"]["model"].lower()]
+# Most recent retest (a scored tool with earlier scores), for the Quick answer and FAQ.
+_rt = sorted((t for t in _sc if t["test"].get("history")), key=lambda t: t["test"]["date"], reverse=True)
+_rt_txt = (f'{_rt[0]["name"]}, retested {_rt[0]["test"]["date"]}: {max(_rt[0]["test"]["history"], key=lambda x: x["date"])["score"]} to {_rt[0]["score"]} ({chg_txt(_rt[0])})') if _rt else ""
 _nokey_txt = ", ".join(f"{e(t['name'])} {t['score']}" for t in _nokey)
 quick_html = ('<b>Quick answer</b><ul class="mut">'
     + f'<li>Highest score so far: {" and ".join(e(t["name"]) for t in _hi)}, {_sc[0]["score"]}/100.</li>'
     + (f'<li>Best open-source {_os_lbl} so far: {e(_os_txt)}, {_os[0]["score"]}/100.</li>' if _os else '')
     + (f'<li>No model key needed: {_nokey_txt} ran on a free account or a built-in free model. The others are bring-your-own-key (we used the free Gemini API tier).</li>' if _nokey else '')
+    + (f'<li>Latest retest: {e(_rt_txt)}. We retest on the same task and rubric, and every earlier score stays visible on its row.</li>' if _rt else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
 att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p><ul class="mut">'
     + "".join(f'<li><b>{e(a["date"])}, {e(a["tool"])}:</b> {e(a["result"])}. {e(a["note"])}</li>' for a in _att) + '</ul>')
@@ -114,6 +125,8 @@ if _os:
     _faq.append(("What is the best open-source AI coding agent?", f'{_os_txt} scored {_os[0]["score"]}/100, the highest open-source {"score" if len(_os_top) > 1 else "agent"} in our tests.'))
 if _nokey:
     _faq.append(("Which AI coding agents work without an API key?", "Of the agents we scored, " + ", ".join(f'{t["name"]} ({t["score"]})' for t in _nokey) + " ran on a free account or a built-in free model with no API key. The others need your own model key; we used the free Gemini API tier."))
+if _rt:
+    _faq.append(("Do AgentTested scores change when a tool is retested?", f"Yes. A retest replaces the score only after a complete, fair run on the same task and rubric, and earlier scores stay listed. Latest retest: {_rt_txt}."))
 faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
     {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]}
 
