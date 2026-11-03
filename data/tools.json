@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-02",
+  "updated": "2026-11-03",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-02 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam on Oct 26 and reflection/beam-free on the Nov 2 retest), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26 and rechecked 2026-11-02).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-03 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam on Oct 26 and reflection/beam-free on the Nov 2 retest), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26 and rechecked 2026-11-02, Cursor rechecked 2026-11-03).",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -122,9 +122,9 @@
           "status": "Tested",
           "score": 97,
           "test": {
-            "date": "2026-10-15",
+            "date": "2026-11-03",
             "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "Cursor CLI (cursor-agent) 2026.10.14-941492e",
+            "tool_version": "Cursor CLI (cursor-agent) 2026.10.22-27dcf5f",
             "model": "Composer 2.5 (Cursor free account default)",
             "breakdown": {
               "task_success": 40,
@@ -133,7 +133,14 @@
               "cost_free_tier": 10,
               "developer_experience": 9
             },
-            "evidence": "Passed 10/10 automated checks in 37 s with 1 prompt and no interventions on a free Cursor account (the web Cloud Agents need Premium; the CLI did not). -1 quality: task IDs use crypto.randomUUID(), which fails outside secure contexts (e.g. plain http on a LAN IP). -1: the checkbox accessibility label is always 'Mark task complete'. -1 DX: separate browser login step."
+            "evidence": "Retest on the latest CLI (first test Oct 15 on 2026.10.14-941492e also scored 97). Passed 10/10 automated checks in 44 s with 1 prompt and no interventions on a free Cursor account, same default model. It now validates saved data field by field, so a corrupted localStorage value no longer breaks the app (we checked). -1 quality: task IDs still use crypto.randomUUID(), which fails outside secure contexts (we checked: served over plain http on a LAN address, adding a task throws and nothing is added). -1: the checkbox and delete-button accessibility labels are generic ('Mark task complete', 'Delete task') and don't name the task. -1 DX: separate browser login step.",
+            "history": [
+              {
+                "date": "2026-10-15",
+                "tool_version": "Cursor CLI 2026.10.14-941492e",
+                "score": 97
+              }
+            ]
           }
         },
         {
@@ -368,11 +375,35 @@
           "date": "2026-11-02",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Six 1-token test requests to gemini-3.8-flash on the free tier between 02:59 and 03:04 CST: five returned 503 'This model is currently experiencing high demand' and one timed out after 90 seconds, so we didn't start either run (sixth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-03",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 02:59 and 03:03 CST all returned 503 'high demand' (0.6 to 23.5 seconds each), so we didn't start either run (seventh test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Claude Animated Shorts",
+      "url": "https://github.com/mromidev/claude-animated-shorts",
+      "found": "2026-11-03",
+      "description": "Claude Code skill that makes 55-70 second vertical cartoon story shorts (2D characters in a painted 3D world, gliding cameras, synthesized music and sound effects) by writing a three.js scene and rendering it with Remotion on your own PC, with no AI video generator. Ships the full source of its example short. MIT, free; created Nov 1 and past 850 GitHub stars in two days. You need Node, Python, ffmpeg and Remotion (Remotion has its own license: free for individuals and small teams, larger companies need a paid license), and you bring your own voice-over."
+    },
+    {
+      "name": "UNCUT",
+      "url": "https://github.com/Balanov/uncut",
+      "found": "2026-11-03",
+      "description": "A 7 MB headless coding-agent harness for scripts, CI and experiments: one static Go binary, four tools (read, write, replace, run a command), plain stdin/stdout or NDJSON events. It never summarizes or trims context, and stops with an error instead of passing off a cut-off answer as success. Works with any OpenAI-compatible endpoint or a local model, no telemetry. MIT, free; v0.1 released Nov 2, about 580 GitHub stars. Not a sandbox: shell commands run as your user, so use a container for untrusted tasks."
+    },
+    {
+      "name": "Flockbay",
+      "url": "https://flockbay.com/",
+      "found": "2026-11-03",
+      "description": "Desktop AI game maker built on the official Godot engine (Windows, macOS, Linux): its AI writes GDScript and scenes into a normal Godot 4 project on your disk, runs and playtests the game and fixes what breaks, and Claude Code, Codex or Cursor can drive it over MCP. Launched on Product Hunt Nov 2. Free download with no card; free hosted AI to start (needs an account) or free on your own Claude/ChatGPT plan or API key; paid plans from $20/month add hosted usage. The app itself is not open source."
+    },
     {
       "name": "pixelfx (patch.gg)",
       "url": "https://github.com/patch-gg/pixelfx",

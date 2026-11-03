@@ -45,6 +45,14 @@ def chg_txt(t):
         return ""
     diff = t["score"] - max(h, key=lambda x: x["date"])["score"]
     return "unchanged" if diff == 0 else f'{"up" if diff > 0 else "down"} {abs(diff)} point{"s" if abs(diff) != 1 else ""}'
+# Every retested tool, newest retest first: "Cursor 97 to 97 (unchanged, retested 2026-11-03)". Shown in llms.txt, the Quick answer and the FAQ.
+def retest_summary():
+    rs = sorted((t for t in lb["tools"] if t.get("score") is not None and t["test"].get("history")), key=lambda t: t["test"]["date"], reverse=True)
+    if not rs:
+        return ""
+    ups = sum(1 for t in rs if chg_txt(t).startswith("up")); downs = sum(1 for t in rs if chg_txt(t).startswith("down"))
+    items = "; ".join(f'{t["name"]} {max(t["test"]["history"], key=lambda x: x["date"])["score"]} to {t["score"]} ({chg_txt(t)}, retested {t["test"]["date"]})' for t in rs)
+    return f"{len(rs)} tools retested ({len(rs) - ups - downs} unchanged, {ups} up, {downs} down): {items}"
 for t in lb["tools"]:
     score = t.get("score")
     sc = f"{score}/100 (tested {t['test']['date']}, {t['test']['tool_version']}, model {t['test']['model']}). {key_line(t)}. {t['test']['evidence']}" + (f" Earlier scores: {hist_txt(t)}; change since the previous test: {chg_txt(t)}." if hist_txt(t) else "") if score is not None else t.get("status", "Not yet tested")
@@ -58,6 +66,8 @@ _nw = sorted((t for t in d.get("new_this_week", []) if str(t.get("found", "")) >
 if _nw:
     lines += ["", f"## New this week (found by our discovery agents {_nw_cut} to {upd}; listed, not yet tested or scored)"]
     lines += [f"- [{t['name']}]({t['url']}): {t['description']} Found {t.get('found', 'n/a')}." for t in _nw]
+if retest_summary():
+    lines += ["", "## Retest summary (same task and rubric; earlier scores stay listed)", f"- {retest_summary()}."]
 # Retest and failed-attempt log: shown on tests.html and in llms.txt so readers see runs that produced no score.
 _att = sorted(lb.get("attempts", []), key=lambda a: a["date"], reverse=True)
 if _att:
@@ -111,6 +121,7 @@ quick_html = ('<b>Quick answer</b><ul class="mut">'
     + (f'<li>Best open-source {_os_lbl} so far: {e(_os_txt)}, {_os[0]["score"]}/100.</li>' if _os else '')
     + (f'<li>No model key needed: {_nokey_txt} ran on a free account or a built-in free model. The others are bring-your-own-key (we used the free Gemini API tier).</li>' if _nokey else '')
     + (f'<li>Latest retest: {e(_rt_txt)}. We retest on the same task and rubric, and every earlier score stays visible on its row.</li>' if _rt else '')
+    + (f'<li>Retests so far: {e(retest_summary())}.</li>' if _rt else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
 att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p><ul class="mut">'
     + "".join(f'<li><b>{e(a["date"])}, {e(a["tool"])}:</b> {e(a["result"])}. {e(a["note"])}</li>' for a in _att) + '</ul>')
@@ -126,7 +137,7 @@ if _os:
 if _nokey:
     _faq.append(("Which AI coding agents work without an API key?", "Of the agents we scored, " + ", ".join(f'{t["name"]} ({t["score"]})' for t in _nokey) + " ran on a free account or a built-in free model with no API key. The others need your own model key; we used the free Gemini API tier."))
 if _rt:
-    _faq.append(("Do AgentTested scores change when a tool is retested?", f"Yes. A retest replaces the score only after a complete, fair run on the same task and rubric, and earlier scores stay listed. Latest retest: {_rt_txt}."))
+    _faq.append(("Do AgentTested scores change when a tool is retested?", f"Yes. A retest replaces the score only after a complete, fair run on the same task and rubric, and earlier scores stay listed. Latest retest: {_rt_txt}. Retests so far: {retest_summary()}."))
 faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
     {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]}
 
