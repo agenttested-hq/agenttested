@@ -66,6 +66,14 @@ _nw = sorted((t for t in d.get("new_this_week", []) if str(t.get("found", "")) >
 if _nw:
     lines += ["", f"## New this week (found by our discovery agents {_nw_cut} to {upd}; listed, not yet tested or scored)"]
     lines += [f"- [{t['name']}]({t['url']}): {t['description']} Found {t.get('found', 'n/a')}." for t in _nw]
+# Earlier finds: everything older than the New-this-week window, newest first, so past finds stay visible and indexable.
+_old = sorted((t for t in d.get("new_this_week", []) if str(t.get("found", "")) < _nw_cut), key=lambda t: str(t.get("found", "")), reverse=True)
+def short_desc(t, n=160):
+    s = re.split(r"(?<=[.!?])\s", t["description"].strip(), maxsplit=1)[0]
+    return s if len(s) <= n else s[:n].rsplit(" ", 1)[0] + "…"
+if _old:
+    lines += ["", f"## Earlier finds ({len(_old)} tools found before {_nw_cut}; listed, not tested or scored)"]
+    lines += [f"- [{t['name']}]({t['url']}): {short_desc(t)} Found {t.get('found', 'n/a')}." for t in _old]
 if retest_summary():
     lines += ["", "## Retest summary (same task and rubric; earlier scores stay listed)", f"- {retest_summary()}."]
 # Retest and failed-attempt log: shown on tests.html and in llms.txt so readers see runs that produced no score.
@@ -101,6 +109,11 @@ def nw_card(t):
     found = f'<div class="mut sm">Found {e(t["found"])}</div>' if t.get("found") else ""
     return f'<div class="card"><a href="{e(t["url"])}" rel="noopener" target="_blank"><b>{e(t["name"])}</b></a><div class="mut">{e(t["description"])}</div>{found}</div>'
 nw_html = "".join(nw_card(t) for t in _nw)
+# Collapsed archive of earlier finds under New this week (static HTML, no JavaScript needed).
+earlier_html = ('<!--earlier--><details class="card" id="earlier"><summary><b>Earlier finds</b> <span class="mut sm">'
+    + f'({len(_old)} tools found before {_nw_cut}, newest first; listed, not tested or scored)</span></summary><ul class="mut">'
+    + "".join(f'<li><a href="{e(t["url"])}" rel="noopener" target="_blank">{e(t["name"])}</a> <span class="sm">({e(t.get("found", ""))})</span>: {e(short_desc(t))}</li>' for t in _old)
+    + '</ul></details><!--/earlier-->') if _old else ''
 # "Quick answer" card on the leaderboard: plain-language picks generated from the data, for readers and AI assistants.
 _os = [t for t in _sc if "open source" in t["pricing"].lower()]
 # All open-source agents tied for the best open-source score, each with whether it needs your own model key.
@@ -182,7 +195,8 @@ for p, title in pages.items():
     if p == "tests.html" and _att:
         s = re.sub(r'<div class="card" id="attempts">.*?</div>', lambda m: f'<div class="card" id="attempts">{att_html}</div>', s, count=1, flags=re.S)
     if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
-        s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>', s, count=1, flags=re.S)
+        s = re.sub(r'\s*<!--earlier-->.*?<!--/earlier-->', '', s, flags=re.S)
+        s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>\n{earlier_html}', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)
     s = re.sub(r'<span id="upd">.*?</span>', f'<span id="upd">{upd}</span>', s)
     s = add_head_extras(s, home=(p == ""))

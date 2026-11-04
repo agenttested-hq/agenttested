@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03",
+  "updated": "2026-11-04",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -381,11 +381,35 @@
           "date": "2026-11-03",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 02:59 and 03:03 CST all returned 503 'high demand' (0.6 to 23.5 seconds each), so we didn't start either run (seventh test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-04",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 02:59 and 03:04 CST: four returned 503 'high demand' (1.4 to 22.3 seconds) and one timed out after 90 seconds, so we didn't start either run (eighth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Agent Autoloop",
+      "url": "https://github.com/KKKKhazix/agent-autoloop",
+      "found": "2026-11-04",
+      "description": "Runs Claude Code, Codex or any command-line agent that takes a prompt and prints a reply in the background on your Mac or Linux machine: cron jobs, new GitHub issues and error reports become tasks. When the agent needs your call (deleting data, spending money, messaging someone) it sends a card to Slack, Discord, Feishu, DingTalk, WeCom or a desktop notification and exits, so no tokens burn while it waits; your answer resumes the same session. Small zero-dependency TypeScript kernel, everything else is a plugin. MIT, free; v1.0.0 released Nov 3 and about 1,650 GitHub stars in its first day. Needs Node 24 and an agent you're already signed in to. README is Chinese-first with an English version, and the one-line installer is a curl | sh script, so read it before you run it."
+    },
+    {
+      "name": "Three-Live (Google)",
+      "url": "https://github.com/google/three-live",
+      "found": "2026-11-04",
+      "description": "Open-source runtime from Google that takes AI-generated Three.js code, runs it in a sandbox with time and memory limits, and renders it natively: WebGL2 and WebXR on the web, Filament and Scene Viewer on Android, RealityKit and Quick Look on iOS and visionOS. Its browser playgrounds edit scenes and export GLB, USDZ and AR in one tap with no build. Apache-2.0, free; introduced on the Google Open Source Blog Nov 3 (v1.2.0). Developer preview (alpha) and \"not an officially supported Google product\"; you bring the model that writes the Three.js."
+    },
+    {
+      "name": "Recto",
+      "url": "https://recto.design",
+      "found": "2026-11-04",
+      "description": "Free desktop design canvas for coding agents (Mac, Windows, Linux): it detects Claude Code, Codex, Cursor or OpenCode on your machine and runs them inside the app, so you can prompt a UI, motion, SVG or 3D design, then drag, resize and restyle it with the mouse, pin comments for the agent and reprompt. Designs are real HTML and CSS you can export; no MCP or API setup, everything runs locally. Shown on Show HN Nov 3 (v0.1.6, released Oct 29). Early: the app is not open source, its terms page is still \"coming soon\", and you need your own coding agent."
+    },
     {
       "name": "Claude Animated Shorts",
       "url": "https://github.com/mromidev/claude-animated-shorts",

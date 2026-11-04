@@ -16,3 +16,4 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:24px 0;color:var
 .btn{display:inline-block;background:var(--acc);color:#0b0d12;font-weight:700;padding:12px 18px;border-radius:10px;text-decoration:none}.btn:hover{filter:brightness(1.1)}
 .score{font-size:1.4rem;color:var(--acc)}.sm{font-size:.82rem;line-height:1.4;margin-top:4px}
 .warn{border-color:#5a4a14;background:#1a170c}
+#earlier{margin-top:16px}#earlier summary{cursor:pointer}#earlier ul{margin:10px 0 0;padding-left:20px}#earlier li{margin:6px 0;line-height:1.45}
