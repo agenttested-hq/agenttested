@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04",
+  "updated": "2026-11-05",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -163,7 +163,7 @@
               "cost_free_tier": 10,
               "developer_experience": 8
             },
-            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed −3 for the high-demand re-run. DX −2: no final summary because of quota."
+            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed \u22123 for the high-demand re-run. DX \u22122: no final summary because of quota."
           }
         },
         {
@@ -387,11 +387,41 @@
           "date": "2026-11-04",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 02:59 and 03:04 CST: four returned 503 'high demand' (1.4 to 22.3 seconds) and one timed out after 90 seconds, so we didn't start either run (eighth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-05",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 03:02 and 03:05 CST all returned 503 'high demand' (2.5 to 16.3 seconds each), so we didn't start either run (ninth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Rerun",
+      "url": "https://github.com/rerun-build/rerun",
+      "found": "2026-11-05",
+      "description": "Self-hostable open-source AI coworkers (AGPL-3.0): a Foreman plans a team, each coworker gets its own memory, skills and computer, and they ask before sending, paying or deleting. Works with Gmail, Slack, Notion, GitHub, Linear and 200+ other tools (plus any MCP server), on an API key or the Claude/ChatGPT subscription you already pay for. Docker Compose self-host (docs.rerun.build/self-host) or Rerun Cloud. Product Hunt Nov 5; GitHub repo from Oct 29, about 694 stars and v0.7.0 on Nov 4. Disclosed: needs your own model access; first self-host build wants ~6 GB RAM / 40 GB disk and a free Supabase project."
+    },
+    {
+      "name": "Cinecode",
+      "url": "https://github.com/sarpstar/cinecode",
+      "found": "2026-11-05",
+      "description": "Claude Code / Cursor skill that makes short films, long YouTube videos, ads, explainers and music videos as code: the agent writes the script, builds every frame in three.js (or 2D/paint/ink looks), designs the sound and hands you a finished MP4 rendered in headless Chrome. MIT, free; created Nov 3, about 330 GitHub stars. Needs Node 22+, Python 3, ffmpeg and Chrome on your machine; optional narrator uses your own Gemini free-tier key, ElevenLabs or a free Turkish voice. Install is a git clone into ~/.claude/skills (or Cursor skills), not a curl | sh."
+    },
+    {
+      "name": "Sketchy",
+      "url": "https://github.com/ddkbs/sketchy",
+      "found": "2026-11-05",
+      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code \u2014 systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
+    },
+    {
+      "name": "OpenMail",
+      "url": "https://openmail.sh",
+      "found": "2026-11-05",
+      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from \u20ac9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
+    },
     {
       "name": "Agent Autoloop",
       "url": "https://github.com/KKKKhazix/agent-autoloop",

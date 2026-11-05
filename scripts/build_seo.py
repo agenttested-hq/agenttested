@@ -197,6 +197,11 @@ for p, title in pages.items():
     if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
         s = re.sub(r'\s*<!--earlier-->.*?<!--/earlier-->', '', s, flags=re.S)
         s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>\n{earlier_html}', s, count=1, flags=re.S)
+        # Live count + date range under the New this week heading (static HTML; app.js may still refresh the cards).
+        _nw_blurb = (f'AI tools our discovery agents found {_nw_cut} to {upd}: <b>{len(_nw)}</b> listed below, not yet tested or scored.'
+                     if _nw else f'No new tools in the {_nw_cut} to {upd} window yet.')
+        s = re.sub(r'(<h2>New this week</h2>)<p class="mut sm">.*?</p>',
+                   lambda m: m.group(1) + f'<p class="mut sm" id="nwblurb">{_nw_blurb}</p>', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)
     s = re.sub(r'<span id="upd">.*?</span>', f'<span id="upd">{upd}</span>', s)
     s = add_head_extras(s, home=(p == ""))
