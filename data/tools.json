@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-05",
+  "updated": "2026-11-06",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-03 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: its built-in free deepseek-v4.1-flash-free, Kilo Code: Kilo's Auto Free model, which picked reflection/beam on Oct 26 and reflection/beam-free on the Nov 2 retest), and the model affects the score, so treat cross-tool comparisons with care. Tied scores are listed alphabetically. Untested tools are listed alphabetically below. Pricing facts checked on official sites on 2026-10-15/16 (OpenCode on 2026-10-19 and rechecked 2026-10-28, Crush on 2026-10-20, Goose on 2026-10-21, Pi on 2026-10-22, Qwen Code on 2026-10-23, Kilo Code on 2026-10-26 and rechecked 2026-11-02, Cursor rechecked 2026-11-03).",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-06 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -13,25 +13,30 @@
           "free_tier": "Yes",
           "pricing": "Copilot Free + paid plans",
           "description": "GitHub's AI coding assistant and agent for editors, the CLI and pull requests.",
-          "score": 99,
+          "score": 100,
           "status": "Tested",
           "test": {
-            "date": "2026-10-30",
+            "date": "2026-11-06",
             "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "GitHub Copilot CLI 1.0.105",
-            "model": "gpt-6-luna (Copilot Free default)",
+            "tool_version": "GitHub Copilot CLI 1.0.106",
+            "model": "gpt-6-luna (Copilot Free default; Fusion auto-routed, only Free candidate for this task)",
             "breakdown": {
               "task_success": 40,
-              "output_quality": 24,
+              "output_quality": 25,
               "speed_effort": 15,
               "cost_free_tier": 10,
               "developer_experience": 10
             },
-            "evidence": "Retest on the latest CLI (first test Oct 15 on 1.0.98 also scored 99). Passed 10/10 automated checks in 35 s with no interventions on Copilot Free (0.39 AI credits). It validated saved data, handled storage errors, labelled the input and named the task on the delete button, then ran its own syntax check and gave a clear summary. -1 quality: the checkbox accessibility label names the task but always says 'as complete', even for completed tasks.",
+            "evidence": "Retest on the latest CLI (1.0.105 on Oct 30 and 1.0.98 on Oct 15 both scored 99). Passed 10/10 automated checks in 48 s with no interventions on Copilot Free (0.46 AI credits). Single-file app validates saved data (Array + field checks, try/catch), uses textContent, labels the input, names the task on the delete button, and flips the checkbox aria-label between complete and incomplete. The Oct 15/30 −1 quality for a static \"as complete\" label is gone. Self-check: recovered from a missing `python` binary by retrying with `python3` and `node --check`.",
             "history": [
               {
                 "date": "2026-10-15",
                 "tool_version": "GitHub Copilot CLI 1.0.98",
+                "score": 99
+              },
+              {
+                "date": "2026-10-30",
+                "tool_version": "GitHub Copilot CLI 1.0.105",
                 "score": 99
               }
             ]
@@ -163,7 +168,7 @@
               "cost_free_tier": 10,
               "developer_experience": 8
             },
-            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed \u22123 for the high-demand re-run. DX \u22122: no final summary because of quota."
+            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed −3 for the high-demand re-run. DX −2: no final summary because of quota."
           }
         },
         {
@@ -393,11 +398,41 @@
           "date": "2026-11-05",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 03:02 and 03:05 CST all returned 503 'high demand' (2.5 to 16.3 seconds each), so we didn't start either run (ninth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-06",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 03:09 and 03:15 CST: three returned 503 'high demand' (3.6 to 60.8 seconds) and two timed out after 90 seconds, so we didn't start either run (tenth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "sand3d",
+      "url": "https://github.com/Sandflow-ai/sand3d",
+      "found": "2026-11-06",
+      "description": "Python library for writing 3D objects as short programs over Blender's bpy, built so an LLM can author parts, joints and assemblies in a few hundred tokens (the whole API fits in about 3,600 tokens). Exports GLB, URDF, USDA, OBJ and STL; deterministic bit-for-bit meshes. Apache-2.0, free; created Nov 3, about 500 stars. Docs and gallery at sand3d.sandflow.ai; Hugging Face explorer. Needs Python 3.11/3.13 (bpy comes with it). Disclosed: you bring the model that writes the sand3d programs."
+    },
+    {
+      "name": "LivLiv Player",
+      "url": "https://github.com/livliv-dev/player",
+      "found": "2026-11-06",
+      "description": "Lightweight 2.5D character player for the web (~30 KB gzipped core, WebGL2, no dependencies): lip sync from mic/audio/video and optional webcam face tracking (MediaPipe), one API for LivLiv, VRM and PNGTuber characters, plus 21 featured characters ready to drop in. Apache-2.0, free npm package @livliv-dev/player; created Nov 4, about 700 stars. Live demo at livliv-dev.github.io/player. Disclosed: face tracking pulls in @mediapipe/tasks-vision only when you import it."
+    },
+    {
+      "name": "pixel-gif-sticker-pack",
+      "url": "https://github.com/WoYun520/pixel-gif-sticker-pack",
+      "found": "2026-11-06",
+      "description": "Codex / Claude Code skill that turns a character reference into a chat GIF sticker pack (or a short mascot brand film): pixel, illustration or photographic looks, light-motion or articulated actions, with local Python/Pillow exporters and a visual review gate. MIT, free; created Nov 5, about 510 stars, 242 example stickers in-repo. Disclosed: new pose art uses whatever image model your agent already has; the exporters themselves need no API key."
+    },
+    {
+      "name": "Zerg Client",
+      "url": "https://zergai.com/ztc",
+      "found": "2026-11-06",
+      "description": "Coding-agent harness (ztc) that owns its own terminal multiplexer: ask for Vim or htop and panes open beside the agent; panes can hold more agents on different models. Evaluation beta on Product Hunt Nov 5; desktop/interactive client for Mac Apple silicon (v0.11.0-beta.1), headless on macOS/Linux/Windows. Free to evaluate under the Zerg Source Available License; sign in with ZergAI or bring your own OpenAI/DeepSeek key. Disclosed: not open source; ongoing commercial use needs a separate license; model usage billed separately; Windows/Linux desktop apps still \"coming soon\"."
+    },
     {
       "name": "Rerun",
       "url": "https://github.com/rerun-build/rerun",
@@ -414,13 +449,13 @@
       "name": "Sketchy",
       "url": "https://github.com/ddkbs/sketchy",
       "found": "2026-11-05",
-      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code \u2014 systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
+      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code — systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
     },
     {
       "name": "OpenMail",
       "url": "https://openmail.sh",
       "found": "2026-11-05",
-      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from \u20ac9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
+      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from €9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
     },
     {
       "name": "Agent Autoloop",

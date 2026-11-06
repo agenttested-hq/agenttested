@@ -80,6 +80,9 @@ if retest_summary():
 _att = sorted(lb.get("attempts", []), key=lambda a: a["date"], reverse=True)
 if _att:
     lines += ["", "## Retests and attempts with no score (scores only change after a complete, fair run)"]
+    _gq = [a for a in _att if "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))]
+    if _gq:
+        lines += [f"- Blocked streak: gemini-3.8-flash on the free tier has failed {len(_gq)} consecutive test mornings (most recent {_gq[0]['date']}); Goose 94 and Qwen Code 93 unchanged until a fair run completes."]
     lines += [f"- {a['date']}, {a['tool']}: {a['result']}. {a['note']}" for a in _att]
 lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))
@@ -136,7 +139,13 @@ quick_html = ('<b>Quick answer</b><ul class="mut">'
     + (f'<li>Latest retest: {e(_rt_txt)}. We retest on the same task and rubric, and every earlier score stays visible on its row.</li>' if _rt else '')
     + (f'<li>Retests so far: {e(retest_summary())}.</li>' if _rt else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
-att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p><ul class="mut">'
+_gq_att = [a for a in _att if "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))]
+_streak_html = (f'<p class="mut"><b>Blocked streak:</b> gemini-3.8-flash on the free tier has failed {len(_gq_att)} consecutive test mornings '
+                f'(most recent {_gq_att[0]["date"]}); Goose 94 and Qwen Code 93 unchanged until a fair run completes.</p>'
+                if _gq_att else '')
+att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p>'
+    + _streak_html
+    + '<ul class="mut">'
     + "".join(f'<li><b>{e(a["date"])}, {e(a["tool"])}:</b> {e(a["result"])}. {e(a["note"])}</li>' for a in _att) + '</ul>')
 ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"], "itemListElement": [
     {"@type": "ListItem", "position": i + 1, "item": {"@type": "SoftwareApplication", "name": t["name"], "url": t["url"],
@@ -200,7 +209,7 @@ for p, title in pages.items():
         # Live count + date range under the New this week heading (static HTML; app.js may still refresh the cards).
         _nw_blurb = (f'AI tools our discovery agents found {_nw_cut} to {upd}: <b>{len(_nw)}</b> listed below, not yet tested or scored.'
                      if _nw else f'No new tools in the {_nw_cut} to {upd} window yet.')
-        s = re.sub(r'(<h2>New this week</h2>)<p class="mut sm">.*?</p>',
+        s = re.sub(r'(<h2>New this week</h2>)<p class="mut sm"[^>]*>.*?</p>',
                    lambda m: m.group(1) + f'<p class="mut sm" id="nwblurb">{_nw_blurb}</p>', s, count=1, flags=re.S)
     s = s.replace('</head>', meta + '<!--/seo--></head>', 1)
     s = re.sub(r'<span id="upd">.*?</span>', f'<span id="upd">{upd}</span>', s)
