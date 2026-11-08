@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-06",
+  "updated": "2026-11-07",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -27,7 +27,7 @@
               "cost_free_tier": 10,
               "developer_experience": 10
             },
-            "evidence": "Retest on the latest CLI (1.0.105 on Oct 30 and 1.0.98 on Oct 15 both scored 99). Passed 10/10 automated checks in 48 s with no interventions on Copilot Free (0.46 AI credits). Single-file app validates saved data (Array + field checks, try/catch), uses textContent, labels the input, names the task on the delete button, and flips the checkbox aria-label between complete and incomplete. The Oct 15/30 −1 quality for a static \"as complete\" label is gone. Self-check: recovered from a missing `python` binary by retrying with `python3` and `node --check`.",
+            "evidence": "Retest on the latest CLI (1.0.105 on Oct 30 and 1.0.98 on Oct 15 both scored 99). Passed 10/10 automated checks in 48 s with no interventions on Copilot Free (0.46 AI credits). Single-file app validates saved data (Array + field checks, try/catch), uses textContent, labels the input, names the task on the delete button, and flips the checkbox aria-label between complete and incomplete. The Oct 15/30 \u22121 quality for a static \"as complete\" label is gone. Self-check: recovered from a missing `python` binary by retrying with `python3` and `node --check`.",
             "history": [
               {
                 "date": "2026-10-15",
@@ -168,7 +168,7 @@
               "cost_free_tier": 10,
               "developer_experience": 8
             },
-            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed −3 for the high-demand re-run. DX −2: no final summary because of quota."
+            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed \u22123 for the high-demand re-run. DX \u22122: no final summary because of quota."
           }
         },
         {
@@ -410,6 +410,18 @@
   ],
   "new_this_week": [
     {
+      "name": "agent-manager",
+      "url": "https://github.com/wainmann/agent-manager",
+      "found": "2026-11-07",
+      "description": "Local terminal app (tmux TUI) that runs Claude Code, Codex, OpenCode, Gemini CLI, Pi, Cursor CLI and other coding-agent CLIs side by side with live status, project groups, diff review and fork sessions. Uses your existing installs and subscriptions. Apache-2.0; brew install agent-manager (macOS/Linux); Scoop on Windows. About 650 stars / 70 forks as of Nov 7. Disclosed: not a sandbox; each session is your own CLI as-is."
+    },
+    {
+      "name": "Stroq",
+      "url": "https://github.com/AGGIB/Stroq",
+      "found": "2026-11-07",
+      "description": "Local audit and guard for Claude Code, Codex and Cursor sessions: finds known secrets that left your machine, then installs local hooks that trace risky commands back to the text that dictated them. Apache-2.0; npx @stroq/cli; no account, no telemetry (writes a small cache under ~/.stroq). Show HN Nov 5 (~90 pts). About 200 stars. Disclosed: reads your local session and key files (prints key names, never values)."
+    },
+    {
       "name": "sand3d",
       "url": "https://github.com/Sandflow-ai/sand3d",
       "found": "2026-11-06",
@@ -449,13 +461,13 @@
       "name": "Sketchy",
       "url": "https://github.com/ddkbs/sketchy",
       "found": "2026-11-05",
-      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code — systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
+      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code \u2014 systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
     },
     {
       "name": "OpenMail",
       "url": "https://openmail.sh",
       "found": "2026-11-05",
-      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from €9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
+      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from \u20ac9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
     },
     {
       "name": "Agent Autoloop",
