@@ -8,6 +8,7 @@ Data last updated 2026-11-09. Machine-readable data: https://agenttested-hq.gith
 - [Best AI coding agents](https://agenttested-hq.github.io/agenttested/leaderboard.html): Round 1 complete
 - [Round 1 test write-up](https://agenttested-hq.github.io/agenttested/tests.html): standard task, checks and per-tool results
 - [Methodology](https://agenttested-hq.github.io/agenttested/about.html): 100-point scoring rubric and no-pay-to-rank policy
+- [Work with us](https://agenttested-hq.github.io/agenttested/work-with-us.html): labeled placements for tool makers; rankings cannot be bought; payment by invoice
 
 ## Best AI coding agents (Round 1 complete)
 Scored tools ran our standard task between 2026-10-15 and 2026-11-06 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.
