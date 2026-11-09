@@ -82,7 +82,7 @@ if _att:
     lines += ["", "## Retests and attempts with no score (scores only change after a complete, fair run)"]
     _gq = [a for a in _att if "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))]
     if _gq:
-        lines += [f"- Blocked streak: gemini-3.8-flash on the free tier has failed {len(_gq)} consecutive test mornings (most recent {_gq[0]['date']}); Goose 94 and Qwen Code 93 unchanged until a fair run completes."]
+        lines += [f"- Blocked streak: gemini-3.8-flash on the free tier has failed {len(_gq)} test mornings in a row (weekends not attempted) (most recent {_gq[0]['date']}); Goose 94 and Qwen Code 93 unchanged until a fair run completes."]
     lines += [f"- {a['date']}, {a['tool']}: {a['result']}. {a['note']}" for a in _att]
 lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))
@@ -140,7 +140,7 @@ quick_html = ('<b>Quick answer</b><ul class="mut">'
     + (f'<li>Retests so far: {e(retest_summary())}.</li>' if _rt else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
 _gq_att = [a for a in _att if "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))]
-_streak_html = (f'<p class="mut"><b>Blocked streak:</b> gemini-3.8-flash on the free tier has failed {len(_gq_att)} consecutive test mornings '
+_streak_html = (f'<p class="mut"><b>Blocked streak:</b> gemini-3.8-flash on the free tier has failed {len(_gq_att)} test mornings in a row (weekends not attempted) '
                 f'(most recent {_gq_att[0]["date"]}); Goose 94 and Qwen Code 93 unchanged until a fair run completes.</p>'
                 if _gq_att else '')
 att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p>'

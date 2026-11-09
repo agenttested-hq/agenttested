@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07",
+  "updated": "2026-11-09",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -27,7 +27,7 @@
               "cost_free_tier": 10,
               "developer_experience": 10
             },
-            "evidence": "Retest on the latest CLI (1.0.105 on Oct 30 and 1.0.98 on Oct 15 both scored 99). Passed 10/10 automated checks in 48 s with no interventions on Copilot Free (0.46 AI credits). Single-file app validates saved data (Array + field checks, try/catch), uses textContent, labels the input, names the task on the delete button, and flips the checkbox aria-label between complete and incomplete. The Oct 15/30 \u22121 quality for a static \"as complete\" label is gone. Self-check: recovered from a missing `python` binary by retrying with `python3` and `node --check`.",
+            "evidence": "Retest on the latest CLI (1.0.105 on Oct 30 and 1.0.98 on Oct 15 both scored 99). Passed 10/10 automated checks in 48 s with no interventions on Copilot Free (0.46 AI credits). Single-file app validates saved data (Array + field checks, try/catch), uses textContent, labels the input, names the task on the delete button, and flips the checkbox aria-label between complete and incomplete. The Oct 15/30 −1 quality for a static \"as complete\" label is gone. Self-check: recovered from a missing `python` binary by retrying with `python3` and `node --check`.",
             "history": [
               {
                 "date": "2026-10-15",
@@ -168,7 +168,7 @@
               "cost_free_tier": 10,
               "developer_experience": 8
             },
-            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed \u22123 for the high-demand re-run. DX \u22122: no final summary because of quota."
+            "evidence": "Passed 10/10 automated checks. First attempt hit Gemini high demand (no files); re-run completed the app in 312 s (then hit the free-tier 20-request/day quota after Cline's own self-test passed, before a final summary). Quality 25: clean IIFE, try/catch on storage, textContent escaping, dynamic aria-labels. Speed −3 for the high-demand re-run. DX −2: no final summary because of quota."
           }
         },
         {
@@ -404,11 +404,29 @@
           "date": "2026-11-06",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Five 1-token test requests to gemini-3.8-flash on the free tier between 03:09 and 03:15 CST: three returned 503 'high demand' (3.6 to 60.8 seconds) and two timed out after 90 seconds, so we didn't start either run (tenth test morning in a row). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-09",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "One 1-token test request to gemini-3.8-flash on the free tier at 03:04 CST timed out after 90 seconds with no response, so we didn't start either run (eleventh test morning in a row; weekends are not attempted). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "claude-work-mode",
+      "url": "https://github.com/danyuchn/claude-work-mode",
+      "found": "2026-11-09",
+      "description": "Claude Code plugin that switches session work modes with one slash command: auto (don't stop for reversible local steps; hard stops like installs, payments and outgoing messages are queued for one end-of-run report), out (delegate verifiable batch work to subagents), wrap (converge and list open decisions). Optional hook gates. MIT; /plugin install work-mode --marketplace danyuchn/claude-work-mode. About 170 stars / 11 forks, created Nov 8. Disclosed: needs Claude Code 2.1.314+; the gates need bash, jq, git and python3. We scanned the hooks and found no network or key access; we have not run it."
+    },
+    {
+      "name": "HyperFlow H3 Flash",
+      "url": "https://github.com/Video-Rebirth/hyperflow-h3-flash",
+      "found": "2026-11-09",
+      "description": "Open-weights (Apache-2.0) 13.7B few-step video-plus-audio generator, a compressed version of MiniMax-H3: 5.2-15 s clips at 24 fps with stereo sound in 4-8 steps. Runs via ComfyUI/GGUF on 24-32 GB consumer GPUs (Q4_K_M is 9.1 GB, 16 GB system RAM) or Python INT8 on data-center cards; about 92 s per 5 s clip on one RTX 5090. Show HN Nov 8 (~80 pts), ~150 stars. Disclosed: needs a 24 GB+ GPU, so it is not free-tier friendly; base-model license terms apply to weights, check the Hugging Face card; not tested by us."
+    },
     {
       "name": "agent-manager",
       "url": "https://github.com/wainmann/agent-manager",
@@ -461,13 +479,13 @@
       "name": "Sketchy",
       "url": "https://github.com/ddkbs/sketchy",
       "found": "2026-11-05",
-      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code \u2014 systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
+      "description": "Layout engine for AI diagrams: the model says what to draw and label; Sketchy places parts, routes wires and walks you through steps. Hand-drawn interactive drawings in Claude chat (skill zip) or as an MCP server in Claude Code, Cursor and VS Code — systems, CS/ML concepts, your own repo (click a box to open the file), Arduino/ESP32 circuits and labeled photos. MIT, free; Product Hunt Nov 4, v0.1.8 Nov 3, about 196 GitHub stars. Local photo labeling uses Florence-2 on your computer."
     },
     {
       "name": "OpenMail",
       "url": "https://openmail.sh",
       "found": "2026-11-05",
-      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from \u20ac9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
+      "description": "Email API and inboxes built for AI agents: each agent gets its own address on your domain (or openmail.sh), replies arrive over webhook or WebSocket, attachments land as plain text, and there is a hosted MCP server plus Hermes / Claude Code / CLI plugins. Product Hunt Nov 4. Free plan with no card: 3 inboxes, 3,000 emails/month, 3 GB (OpenMail footer on Free). Pro from €9/mo. Built and hosted in the EU. Disclosed: SaaS, not open source; Free has a daily send cap."
     },
     {
       "name": "Agent Autoloop",
