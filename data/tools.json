@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-09",
+  "updated": "2026-11-10",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-06 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-10 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -149,6 +149,41 @@
           }
         },
         {
+          "name": "Kilo Code",
+          "url": "https://kilo.ai/",
+          "free_tier": "Yes",
+          "pricing": "Free, open source (MIT) for individuals; free models via Auto Free with no account, or pay as you go, bring your own key, or Kilo Pass; Teams $15/user/month",
+          "description": "Open-source agentic coding assistant for VS Code, JetBrains and the terminal (Kilo CLI), with a gateway to 500+ models including free ones you can use without signing in.",
+          "status": "Tested",
+          "score": 96,
+          "test": {
+            "date": "2026-11-10",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Kilo CLI 7.8.27",
+            "model": "Kilo Auto Free (routed to dots-studio/dots-3-note-preview:free; no account, no API key)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 21,
+              "speed_effort": 15,
+              "cost_free_tier": 10,
+              "developer_experience": 10
+            },
+            "evidence": "Retest on the new stable Kilo CLI 7.8.27 (published Nov 5) with the same Auto Free setting. Passed 10/10 automated checks in 32 s with no interventions, no sign-in, no API key and no card; Auto Free picked dots-studio/dots-3-note-preview:free this time. Fixed since Nov 2: saved data is read inside a try/catch again (we corrupted localStorage and the app still adds tasks), and the final summary lists what was built and how to run it. Still -1 quality: an unused escapeHtml helper. -1: no checkbox; you toggle a task by clicking its text, which can't be reached with the keyboard. -1: the text input has no label (placeholder only). -1: the delete button just says 'Delete'. Note: Auto Free chooses the model for you and can change over time, so results can vary between runs; Kilo says it may route to providers that log prompts, so don't use it for private code.",
+            "history": [
+              {
+                "date": "2026-10-26",
+                "tool_version": "Kilo CLI 7.8.18",
+                "score": 96
+              },
+              {
+                "date": "2026-11-02",
+                "tool_version": "Kilo CLI 7.8.18",
+                "score": 94
+              }
+            ]
+          }
+        },
+        {
           "name": "Cline",
           "url": "https://cline.bot",
           "free_tier": "Yes",
@@ -240,36 +275,6 @@
               "developer_experience": 9
             },
             "evidence": "Passed 10/10 automated checks with no interventions on the Gemini API free tier. All four files were written within 18.5 minutes (6 model requests), but Gemini 'high demand' errors and slow responses meant Goose had not posted its final reply when our 20-minute timebox ended, so we scored the files present at the cutoff and counted the full 20 minutes. Quality 25: clean IIFE, validates saved data, try/catch on storage, textContent rendering, checkbox and delete labels that name the task and flip with its state. -5 speed: 20 minutes against the 5-minute target. -1 DX: no final summary before the cutoff."
-          }
-        },
-        {
-          "name": "Kilo Code",
-          "url": "https://kilo.ai/",
-          "free_tier": "Yes",
-          "pricing": "Free, open source (MIT) for individuals; free models via Auto Free with no account, or pay as you go, bring your own key, or Kilo Pass; Teams $15/user/month",
-          "description": "Open-source agentic coding assistant for VS Code, JetBrains and the terminal (Kilo CLI), with a gateway to 500+ models including free ones you can use without signing in.",
-          "status": "Tested",
-          "score": 94,
-          "test": {
-            "date": "2026-11-02",
-            "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "Kilo CLI 7.8.18",
-            "model": "Kilo Auto Free (routed to reflection/beam-free; no account, no API key)",
-            "breakdown": {
-              "task_success": 40,
-              "output_quality": 20,
-              "speed_effort": 15,
-              "cost_free_tier": 10,
-              "developer_experience": 9
-            },
-            "evidence": "Retest on the same CLI version and the same Auto Free setting (first test Oct 26 scored 96). Passed 10/10 automated checks in 13 s with no interventions, no sign-in, no API key and no card; Auto Free picked reflection/beam-free this time. The app it wrote was weaker than on Oct 26: -1 quality: an unused escapeHtml helper again. -1: saved data is read with no error handling, so a corrupted localStorage value stops the whole app (we checked: nothing can be added). -1: no checkbox; you toggle a task by clicking its text, which can't be reached with the keyboard. -1: the text input has no label (placeholder only). -1: the delete button just says 'Delete'. -1 DX: the final summary was again just 'Done.'. Note: Auto Free chooses the model for you and can change over time, so results can vary between runs; Kilo says it may route to providers that log prompts, so don't use it for private code.",
-            "history": [
-              {
-                "date": "2026-10-26",
-                "tool_version": "Kilo CLI 7.8.18",
-                "score": 96
-              }
-            ]
           }
         },
         {
@@ -410,11 +415,35 @@
           "date": "2026-11-09",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "One 1-token test request to gemini-3.8-flash on the free tier at 03:04 CST timed out after 90 seconds with no response, so we didn't start either run (eleventh test morning in a row; weekends are not attempted). A full agent run makes dozens of model calls, so it wouldn't be a fair test."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-10",
+          "result": "Postponed again; scores unchanged (94 and 93)",
+          "note": "Three 1-token test requests to gemini-3.8-flash on the free tier between 03:06 and 03:09 CST: one timed out after 90 seconds and two returned 503 'high demand' (5.0 and 27.6 seconds), so we didn't start either run (twelfth test morning in a row; weekends are not attempted). A full agent run makes dozens of model calls, so it wouldn't be a fair test. We retested Kilo Code instead, which needs no model key."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Vork",
+      "url": "https://github.com/voyager-so/vork",
+      "description": "Headless 3D and VFX engine built for AI agents: the agent writes the scene, shaders, cameras and physics as code and vork renders it on the GPU (Rust + Slang, Vulkan/Metal). Source-available, free during the research preview (not open source). Needs a recent NVIDIA GPU with ray tracing on Linux/Windows or Apple Silicon. Show HN Nov 9, 2026.",
+      "found": "2026-11-10"
+    },
+    {
+      "name": "Image 2 Sculpt (gokayfem)",
+      "url": "https://github.com/gokayfem/image-to-sculpt",
+      "description": "Agent skill (Claude Code, Codex, Cursor, Copilot, Gemini CLI) that turns one image into a watertight Blender sculpt checked against that image, with a replayable build timelapse. MIT. Needs Blender 5.2+, ffmpeg and a fal API key for masks, depth and generated views.",
+      "found": "2026-11-10"
+    },
+    {
+      "name": "STE80 Humanizer",
+      "url": "https://github.com/Dodaios/ste80-humanizer",
+      "description": "Agent skill that strips common AI tells from text and rewrites it toward ASD-STE100 Simplified Technical English. Handy for READMEs and docs your agent writes. MIT. Show HN Nov 9, 2026.",
+      "found": "2026-11-10"
+    },
     {
       "name": "claude-work-mode",
       "url": "https://github.com/danyuchn/claude-work-mode",

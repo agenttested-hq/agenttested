@@ -7,7 +7,7 @@ BASE = "https://agenttested-hq.github.io/agenttested/"
 d = json.loads((ROOT / "data/tools.json").read_text())
 upd = d["updated"]
 lb = d["leaderboards"][0]
-pages = {"": "AgentTested: AI tools, actually tested", "leaderboard.html": "Best AI coding agents", "tests.html": "Round 1 test write-up", "about.html": "Methodology"}
+pages = {"": "AgentTested: AI tools, actually tested", "leaderboard.html": "Best AI coding agents", "tests.html": "Round 1 test write-up", "about.html": "Methodology", "work-with-us.html": "Work with us"}
 DESC = "AI tools ranked by agents that actually test them, for builders, vibe coders and game devs."
 _sc = [t for t in lb["tools"] if t.get("score") is not None]
 _top = ", ".join(f'{t["name"]} {t["score"]}' for t in _sc[:4])
@@ -16,6 +16,7 @@ PDESC = {  # per-page meta descriptions, regenerated from data so scores stay cu
     "leaderboard.html": f"{len(_sc)} AI coding agents tested on the same task, all on free tiers: {_top} and more. Scores, pricing and free tiers, updated {upd}.",
     "tests.html": f"How we tested {len(_sc)} AI coding agents: one standard prompt, 10 automated browser checks and a 100-point rubric, with per-tool deductions.",
     "about.html": "How AgentTested scores AI tools: a 100-point rubric (task success, quality, speed, cost, developer experience). Rankings can't be bought.",
+    "work-with-us.html": "Labeled placements for AI tool makers on AgentTested. Rankings cannot be bought.",
 }
 
 (ROOT / "robots.txt").write_text(
@@ -29,7 +30,7 @@ PDESC = {  # per-page meta descriptions, regenerated from data so scores stay cu
 
 lines = [f"# AgentTested", "", f"> {DESC} Rankings can't be bought; sponsored placements are labeled and kept separate.", "",
          f"Data last updated {upd}. Machine-readable data: {BASE}data/tools.json", "",
-         "## Pages", f"- [Best AI coding agents]({BASE}leaderboard.html): {lb['status']}", f"- [Round 1 test write-up]({BASE}tests.html): standard task, checks and per-tool results", f"- [Methodology]({BASE}about.html): 100-point scoring rubric and no-pay-to-rank policy", "",
+         "## Pages", f"- [Best AI coding agents]({BASE}leaderboard.html): {lb['status']}", f"- [Round 1 test write-up]({BASE}tests.html): standard task, checks and per-tool results", f"- [Methodology]({BASE}about.html): 100-point scoring rubric and no-pay-to-rank policy", f"- [Work with us]({BASE}work-with-us.html): labeled placements for tool makers; rankings cannot be bought; payment by invoice", "",
          f"## {lb['title']} ({lb['status']})", lb["note"], ""]
 # Per-tool model-key note, shared by llms.txt, leaderboard rows and the Quick answer.
 def key_line(t):
@@ -170,7 +171,10 @@ _gc = re.sub(r"[^a-z0-9-]", "", str(_cfg.get("goatcounter_code", "")).strip().lo
 _gsv = re.sub(r"[^A-Za-z0-9_-]", "", str(_cfg.get("google_site_verification", "")).strip())
 _isv = re.sub(r"[^A-Za-z0-9-]", "", str(_cfg.get("impact_site_verification", "")).strip())
 
+ICON = '<!--icon--><link rel="icon" href="/agenttested/assets/favicon.svg" type="image/svg+xml"><!--/icon-->'
 def add_head_extras(s, home=False):
+    s = re.sub(r'<!--icon-->.*?<!--/icon-->', '', s, flags=re.S)
+    s = s.replace('</head>', ICON + '</head>', 1)
     s = re.sub(r'<!--analytics-->.*?<!--/analytics-->', '', s, flags=re.S)
     extra = ""
     if home and _gsv:
