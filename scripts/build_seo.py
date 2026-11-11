@@ -79,11 +79,32 @@ if retest_summary():
     lines += ["", "## Retest summary (same task and rubric; earlier scores stay listed)", f"- {retest_summary()}."]
 # Retest and failed-attempt log: shown on tests.html and in llms.txt so readers see runs that produced no score.
 _att = sorted(lb.get("attempts", []), key=lambda a: a["date"], reverse=True)
+# Gemini blocked streak: consecutive postponed/no-result Goose+Qwen mornings, counted from the newest attempt back.
+# It stops at the first completed run, so once Goose/Qwen run again the text says the streak ended instead of growing.
+def _is_block(a): return "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))
+_gq_all = [a for a in _att if "Goose" in a.get("tool","")]
+_run = 0
+for a in _gq_all:
+    if not _is_block(a): break
+    _run += 1
+_T = {t["name"]: t for t in lb["tools"]}
+_gs, _qs = _T.get("Goose", {}).get("score"), _T.get("Qwen Code", {}).get("score")
+if _gq_all and _run:
+    _streak_txt = (f"Blocked streak: gemini-3.8-flash on the free tier has failed {_run} test mornings in a row (weekends not attempted) "
+                   f"(most recent {_gq_all[0]['date']}); Goose {_gs} and Qwen Code {_qs} unchanged until a fair run completes.")
+elif _gq_all:
+    _ended = 0
+    for a in _gq_all[1:]:
+        if not _is_block(a): break
+        _ended += 1
+    _streak_txt = (f"Gemini streak ended: after {_ended} test mornings when the gemini-3.8-flash free tier was too unreliable for a fair run, "
+                   f"it answered on {_gq_all[0]['date']} and we retested Goose ({_gs} now). Qwen Code ({_qs}) is next.")
+else:
+    _streak_txt = ""
 if _att:
     lines += ["", "## Retests and attempts with no score (scores only change after a complete, fair run)"]
-    _gq = [a for a in _att if "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))]
-    if _gq:
-        lines += [f"- Blocked streak: gemini-3.8-flash on the free tier has failed {len(_gq)} test mornings in a row (weekends not attempted) (most recent {_gq[0]['date']}); Goose 94 and Qwen Code 93 unchanged until a fair run completes."]
+    if _streak_txt:
+        lines += [f"- {_streak_txt}"]
     lines += [f"- {a['date']}, {a['tool']}: {a['result']}. {a['note']}" for a in _att]
 lines += ["", "## Newsletter", "- [Weekly AgentTested brief](https://agenttested.beehiiv.com/subscribe): new tools, leaderboard changes and test results, once a week. Free.", "", "## Official channels", f"- Site: {BASE} (launched 2026-10-15). Newsletter: https://agenttested.beehiiv.com/subscribe. Email: agenttested.hq@gmail.com.", "- AgentTested is not affiliated with agenttested.ai or @agenttested on X.", ""]
 (ROOT / "llms.txt").write_text("\n".join(lines))
@@ -140,10 +161,7 @@ quick_html = ('<b>Quick answer</b><ul class="mut">'
     + (f'<li>Latest retest: {e(_rt_txt)}. We retest on the same task and rubric, and every earlier score stays visible on its row.</li>' if _rt else '')
     + (f'<li>Retests so far: {e(retest_summary())}.</li>' if _rt else '')
     + f'<li>All {len(_sc)} scored agents were tested on free tiers with no card, on the same task and rubric. Scores can\'t be bought.</li></ul>')
-_gq_att = [a for a in _att if "Goose" in a.get("tool","") and ("Postponed" in a.get("result","") or "No result" in a.get("result",""))]
-_streak_html = (f'<p class="mut"><b>Blocked streak:</b> gemini-3.8-flash on the free tier has failed {len(_gq_att)} test mornings in a row (weekends not attempted) '
-                f'(most recent {_gq_att[0]["date"]}); Goose 94 and Qwen Code 93 unchanged until a fair run completes.</p>'
-                if _gq_att else '')
+_streak_html = (f'<p class="mut"><b>{e(_streak_txt.split(":")[0])}:</b> {e(_streak_txt.split(":",1)[1].strip())}</p>' if _streak_txt else '')
 att_html = ('<h3>Retests and attempts with no score</h3><p class="mut">We log every run that didn\'t produce a score, so you can see what we tried. A score only changes after a complete, fair run.</p>'
     + _streak_html
     + '<ul class="mut">'
@@ -208,6 +226,10 @@ for p, title in pages.items():
     if p == "tests.html" and _att:
         s = re.sub(r'<div class="card" id="attempts">.*?</div>', lambda m: f'<div class="card" id="attempts">{att_html}</div>', s, count=1, flags=re.S)
     if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
+        # Leaderboard card score list, generated from tools.json so it can't go stale after a retest (it was hand-edited before Nov 11).
+        _short = lambda n: "Copilot" if n == "GitHub Copilot" else n
+        _lb_line = f'{len(lb["tools"])} tools · Round 1: {len(_sc)} scored (' + ", ".join(f'{e(_short(t["name"]))} {t["score"]}' for t in _sc) + ')'
+        s = re.sub(r'(<b>Best AI coding agents</b><div class="mut">)[^<]*(</div>)', lambda m: m.group(1) + _lb_line + m.group(2), s, count=1)
         s = re.sub(r'\s*<!--earlier-->.*?<!--/earlier-->', '', s, flags=re.S)
         s = re.sub(r'<div id="new">.*?</div>(?=\s*<div class="card"><h3>)', lambda m: f'<div id="new">{nw_html}</div>\n{earlier_html}', s, count=1, flags=re.S)
         # Live count + date range under the New this week heading (static HTML; app.js may still refresh the cards).

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-10",
+  "updated": "2026-11-11",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-10 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-11 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -119,31 +119,31 @@
           }
         },
         {
-          "name": "Cursor",
-          "url": "https://cursor.com",
+          "name": "Goose",
+          "url": "https://goose-docs.ai",
           "free_tier": "Yes",
-          "pricing": "Free Hobby plan + paid plans",
-          "description": "AI-first code editor with an agent that can plan, edit and run code across your project.",
+          "pricing": "Free, open source (Apache-2.0); you pay for your own model API usage",
+          "description": "Open-source, extensible AI agent (desktop app, CLI and API) from the Agentic AI Foundation, originally built by Block; works with many model providers.",
           "status": "Tested",
-          "score": 97,
+          "score": 96,
           "test": {
-            "date": "2026-11-03",
+            "date": "2026-11-11",
             "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "Cursor CLI (cursor-agent) 2026.10.22-27dcf5f",
-            "model": "Composer 2.5 (Cursor free account default)",
+            "tool_version": "Goose CLI 1.59.0",
+            "model": "gemini-3.8-flash (Gemini API free tier)",
             "breakdown": {
               "task_success": 40,
-              "output_quality": 23,
-              "speed_effort": 15,
+              "output_quality": 24,
+              "speed_effort": 12,
               "cost_free_tier": 10,
-              "developer_experience": 9
+              "developer_experience": 10
             },
-            "evidence": "Retest on the latest CLI (first test Oct 15 on 2026.10.14-941492e also scored 97). Passed 10/10 automated checks in 44 s with 1 prompt and no interventions on a free Cursor account, same default model. It now validates saved data field by field, so a corrupted localStorage value no longer breaks the app (we checked). -1 quality: task IDs still use crypto.randomUUID(), which fails outside secure contexts (we checked: served over plain http on a LAN address, adding a task throws and nothing is added). -1: the checkbox and delete-button accessibility labels are generic ('Mark task complete', 'Delete task') and don't name the task. -1 DX: separate browser login step.",
+            "evidence": "Retest on Goose 1.59.0 (released Nov 10), same model and settings, after 12 test mornings when the Gemini free tier was too unreliable to run. Passed 10/10 automated checks with no interventions and finished in 15 minutes with a clear final summary (the Oct 21 run hit our 20-minute timebox before replying). It also checked its own work in headless Chrome. Quality 24: clean IIFE, try/catch on load and save, textContent rendering, delete label names the task, correct README; corrupted saved data doesn't break it (we checked). -1: the checkbox label is generic ('Toggle task completed') and doesn't change with state. -3 speed: 15 minutes against the 5-minute target, mostly slow free-tier model responses.",
             "history": [
               {
-                "date": "2026-10-15",
-                "tool_version": "Cursor CLI 2026.10.14-941492e",
-                "score": 97
+                "date": "2026-10-21",
+                "tool_version": "Goose CLI 1.55.0",
+                "score": 94
               }
             ]
           }
@@ -255,29 +255,6 @@
           }
         },
         {
-          "name": "Goose",
-          "url": "https://goose-docs.ai",
-          "free_tier": "Yes",
-          "pricing": "Free, open source (Apache-2.0); you pay for your own model API usage",
-          "description": "Open-source, extensible AI agent (desktop app, CLI and API) from the Agentic AI Foundation, originally built by Block; works with many model providers.",
-          "status": "Tested",
-          "score": 94,
-          "test": {
-            "date": "2026-10-21",
-            "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "Goose CLI 1.55.0",
-            "model": "gemini-3.8-flash (Gemini API free tier)",
-            "breakdown": {
-              "task_success": 40,
-              "output_quality": 25,
-              "speed_effort": 10,
-              "cost_free_tier": 10,
-              "developer_experience": 9
-            },
-            "evidence": "Passed 10/10 automated checks with no interventions on the Gemini API free tier. All four files were written within 18.5 minutes (6 model requests), but Gemini 'high demand' errors and slow responses meant Goose had not posted its final reply when our 20-minute timebox ended, so we scored the files present at the cutoff and counted the full 20 minutes. Quality 25: clean IIFE, validates saved data, try/catch on storage, textContent rendering, checkbox and delete labels that name the task and flip with its state. -5 speed: 20 minutes against the 5-minute target. -1 DX: no final summary before the cutoff."
-          }
-        },
-        {
           "name": "Qwen Code",
           "url": "https://github.com/QwenLM/qwen-code",
           "free_tier": "Yes",
@@ -298,6 +275,41 @@
               "developer_experience": 9
             },
             "evidence": "Passed 10/10 automated checks with no interventions on the Gemini API free tier and ended with a clear summary, but took 18 minutes: Gemini was slow and returned 6 'high demand' errors (Qwen Code retried them itself), and the agent spent 4 extra requests reading files that did not exist yet. Quality 23: clean IIFE, validates saved data, try/catch on storage, textContent rendering, correct README. -1 the text input has no label (placeholder only); -1 checkbox and delete labels don't name the task. -4 speed: 18 minutes against the 5-minute target. -1 DX: needs Node 22+ and a hand-written settings file to use a Gemini key headlessly."
+          }
+        },
+        {
+          "name": "Cursor",
+          "url": "https://cursor.com",
+          "free_tier": "Yes",
+          "pricing": "Free Hobby plan + paid plans",
+          "description": "AI-first code editor with an agent that can plan, edit and run code across your project.",
+          "status": "Tested",
+          "score": 92,
+          "test": {
+            "date": "2026-11-11",
+            "task": "task-v1 (Tiny To-Do)",
+            "tool_version": "Cursor CLI (cursor-agent) 2026.11.11-043ef28",
+            "model": "Composer 2.5 (Cursor free account default)",
+            "breakdown": {
+              "task_success": 40,
+              "output_quality": 24,
+              "speed_effort": 10,
+              "cost_free_tier": 10,
+              "developer_experience": 8
+            },
+            "evidence": "Retest on the latest CLI with the same free account and default model. It wrote a working app in about 40 seconds (10/10 automated checks), then started a local web server in the background to check it, and the headless run never replied or exited, so our 20-minute timebox ended it. As with Goose on Oct 21, we scored the files present at the cutoff and counted the full 20 minutes: -5 speed, -1 DX for no final summary. A second run right after finished in 20 seconds, and a short diagnostic prompt reproduced the hang whenever the agent leaves a background process running; we score the first run, not the best one. Quality 24: the Nov 3 crypto.randomUUID bug is fixed (we checked over plain http), saved data is validated field by field. -1: checkbox and delete labels are generic ('Toggle complete', 'Delete'). -1 DX: separate browser login step.",
+            "history": [
+              {
+                "date": "2026-10-15",
+                "tool_version": "Cursor CLI 2026.10.14-941492e",
+                "score": 97
+              },
+              {
+                "date": "2026-11-03",
+                "tool_version": "Cursor CLI 2026.10.22-27dcf5f",
+                "score": 97
+              }
+            ]
           }
         },
         {
@@ -421,11 +433,47 @@
           "date": "2026-11-10",
           "result": "Postponed again; scores unchanged (94 and 93)",
           "note": "Three 1-token test requests to gemini-3.8-flash on the free tier between 03:06 and 03:09 CST: one timed out after 90 seconds and two returned 503 'high demand' (5.0 and 27.6 seconds), so we didn't start either run (twelfth test morning in a row; weekends are not attempted). A full agent run makes dozens of model calls, so it wouldn't be a fair test. We retested Kilo Code instead, which needs no model key."
+        },
+        {
+          "tool": "Goose and Qwen Code",
+          "date": "2026-11-11",
+          "result": "Goose run completed (94 to 96); Qwen Code next",
+          "note": "Three 1-token test requests to gemini-3.8-flash on the free tier at 03:01-03:05 CST: one timed out after 90 seconds, then two answered (82.6 and 11.2 seconds), so we started Goose for the first time since Oct 21. It finished in 15 minutes. That ends the blocked streak at 12 test mornings. Qwen Code wasn't run the same morning because Goose used most of the free tier's daily requests; it stays at 93 until its run."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Modern Web Guidance (Chrome, Edge, Firefox, MDN)",
+      "url": "https://github.com/GoogleChrome/modern-web-guidance",
+      "description": "Agent skills plus a CLI that feed your coding agent current web-platform guidance (view transitions, container queries, popover, anchor positioning, accessibility, performance) so it stops writing 2019-era JavaScript. Includes a legacy-scan command for existing code. Apache-2.0, stewarded by the Chrome, Edge, Firefox and MDN teams. Try without installing: npx modern-web-guidance@latest search \"...\". Show HN Nov 10, 2026.",
+      "found": "2026-11-11"
+    },
+    {
+      "name": "Spacefast (Automattic)",
+      "url": "https://spacefast.com",
+      "description": "Hosting and publishing for what your AI builds: Claude Code, Codex, Cursor, ChatGPT and other agents publish sites and apps to a private review link through a plugin, MCP, CLI or Git push, with a built-in database and custom domains (auth and email listed as coming soon). Free Personal plan with $1/month of usage included; Go $5/month, Pro $15/member/month. From the WordPress.com company; launched Nov 9, 2026.",
+      "found": "2026-11-11"
+    },
+    {
+      "name": "Nod (n8n Labs)",
+      "url": "https://nod.n8n.io",
+      "description": "Open-source (Apache-2.0) personal agent with its own sandboxed Linux workspace and browser: works in connected apps and on websites, asks before it sends, pays, posts or deletes, and keeps saved logins out of the model. Free app; you bring a model provider (OpenAI, Anthropic, OpenRouter, ChatGPT plan) or a local model. macOS 14+, Windows 11 preview, or self-host on Linux. Research preview, separate from n8n; released Nov 10, 2026.",
+      "found": "2026-11-11"
+    },
+    {
+      "name": "line-art-animation (Claude skill)",
+      "url": "https://github.com/JDhruv14/line-art-animation",
+      "description": "Claude skill plus a small dependency-free TypeScript library for animated line-art SVG scenes: ink figures that walk, run and react, wind, lit windows and a day/night cycle, with deterministic frame capture for video. Handy for game and web devs who want illustrated, interactive scenes. MIT. Video export needs Chrome and ffmpeg. Released Nov 10, 2026.",
+      "found": "2026-11-11"
+    },
+    {
+      "name": "lot-map (Claude Code plugin)",
+      "url": "https://github.com/alexeyw/lot-map",
+      "description": "Claude Code plugin that draws a live map beside the chat: every tool call, model step, hook, skill and subagent pulses to its station (files, shell, network, browser, memory), so you can see what the agent is doing at a glance. MIT; install via /plugin install lot-map --marketplace alexeyw/lot-map. Terminal mode needs 144+ columns. Released Nov 9, 2026.",
+      "found": "2026-11-11"
+    },
     {
       "name": "Vork",
       "url": "https://github.com/voyager-so/vork",
