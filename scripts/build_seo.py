@@ -93,12 +93,15 @@ if _gq_all and _run:
     _streak_txt = (f"Blocked streak: gemini-3.8-flash on the free tier has failed {_run} test mornings in a row (weekends not attempted) "
                    f"(most recent {_gq_all[0]['date']}); Goose {_gs} and Qwen Code {_qs} unchanged until a fair run completes.")
 elif _gq_all:
+    # Qwen-only postponements logged after the latest Goose run (Goose and Qwen share the same Gemini free tier).
+    _qp = [a for a in _att if a.get("tool") == "Qwen Code" and "Postponed" in a.get("result", "") and a["date"] > _gq_all[0]["date"]]
     _ended = 0
     for a in _gq_all[1:]:
         if not _is_block(a): break
         _ended += 1
     _streak_txt = (f"Gemini streak ended: after {_ended} test mornings when the gemini-3.8-flash free tier was too unreliable for a fair run, "
-                   f"it answered on {_gq_all[0]['date']} and we retested Goose ({_gs} now). Qwen Code ({_qs}) is next.")
+                   f"it answered on {_gq_all[0]['date']} and we retested Goose ({_gs} now). Qwen Code ({_qs}) is next"
+                   + (f"; its run has been postponed {len(_qp)} test morning{'s' if len(_qp) > 1 else ''} since (most recent {_qp[0]['date']}) because the free tier failed again." if _qp else "."))
 else:
     _streak_txt = ""
 if _att:
@@ -140,12 +143,16 @@ earlier_html = ('<!--earlier--><details class="card" id="earlier"><summary><b>Ea
     + "".join(f'<li><a href="{e(t["url"])}" rel="noopener" target="_blank">{e(t["name"])}</a> <span class="sm">({e(t.get("found", ""))})</span>: {e(short_desc(t))}</li>' for t in _old)
     + '</ul></details><!--/earlier-->') if _old else ''
 # "Quick answer" card on the leaderboard: plain-language picks generated from the data, for readers and AI assistants.
+# "A", "A and B", "A, B and C": readable list joins for ties in the Quick answer and FAQ.
+def _and(xs):
+    xs = list(xs)
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
 _os = [t for t in _sc if "open source" in t["pricing"].lower()]
 # All open-source agents tied for the best open-source score, each with whether it needs your own model key.
 _os_top = [t for t in _os if t["score"] == _os[0]["score"]] if _os else []
 def _keynote(t):
     return "you bring your own model key" if "api free tier" in t["test"]["model"].lower() else "no model key needed"
-_os_txt = " and ".join(f'{t["name"]} ({_keynote(t)})' for t in _os_top)
+_os_txt = _and(f'{t["name"]} ({_keynote(t)})' for t in _os_top)
 _os_lbl = "agents" if len(_os_top) > 1 else "agent"
 _hi = [t for t in _sc if t["score"] == _sc[0]["score"]]
 # "No model key needed" = tested on the tool's own free account or built-in free model (not a bring-your-own API key).
@@ -155,7 +162,7 @@ _rt = sorted((t for t in _sc if t["test"].get("history")), key=lambda t: t["test
 _rt_txt = (f'{_rt[0]["name"]}, retested {_rt[0]["test"]["date"]}: {max(_rt[0]["test"]["history"], key=lambda x: x["date"])["score"]} to {_rt[0]["score"]} ({chg_txt(_rt[0])})') if _rt else ""
 _nokey_txt = ", ".join(f"{e(t['name'])} {t['score']}" for t in _nokey)
 quick_html = ('<b>Quick answer</b><ul class="mut">'
-    + f'<li>Highest score so far: {" and ".join(e(t["name"]) for t in _hi)}, {_sc[0]["score"]}/100.</li>'
+    + f'<li>Highest score so far: {_and(e(t["name"]) for t in _hi)}, {_sc[0]["score"]}/100{" (a " + str(len(_hi)) + "-way tie)" if len(_hi) > 1 else ""}.</li>'
     + (f'<li>Best open-source {_os_lbl} so far: {e(_os_txt)}, {_os[0]["score"]}/100.</li>' if _os else '')
     + (f'<li>No model key needed: {_nokey_txt} ran on a free account or a built-in free model. The others are bring-your-own-key (we used the free Gemini API tier).</li>' if _nokey else '')
     + (f'<li>Latest retest: {e(_rt_txt)}. We retest on the same task and rubric, and every earlier score stays visible on its row.</li>' if _rt else '')
@@ -172,7 +179,7 @@ ld = {"@context": "https://schema.org", "@type": "ItemList", "name": lb["title"]
      **({"review": {"@type": "Review", "author": {"@type": "Organization", "name": "AgentTested"}, "datePublished": t["test"]["date"],
         "reviewRating": {"@type": "Rating", "ratingValue": t["score"], "bestRating": 100, "worstRating": 0}, "reviewBody": t["test"]["evidence"]}} if t.get("score") is not None else {})}} for i, t in enumerate(lb["tools"])]}
 
-_faq = [("What is the best AI coding agent right now?", f'In our tests the highest score so far is {" and ".join(t["name"] for t in _hi)} with {_sc[0]["score"]}/100, out of {len(_sc)} agents tested on the same task and rubric (data updated {upd}).')]
+_faq = [("What is the best AI coding agent right now?", f'In our tests the highest score so far is {_and(t["name"] for t in _hi)} with {_sc[0]["score"]}/100{" (tied)" if len(_hi) > 1 else ""}, out of {len(_sc)} agents tested on the same task and rubric (data updated {upd}).')]
 if _os:
     _faq.append(("What is the best open-source AI coding agent?", f'{_os_txt} scored {_os[0]["score"]}/100, the highest open-source {"score" if len(_os_top) > 1 else "agent"} in our tests.'))
 if _nokey:

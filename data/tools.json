@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11",
+  "updated": "2026-11-12",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
@@ -13,21 +13,21 @@
           "free_tier": "Yes",
           "pricing": "Copilot Free + paid plans",
           "description": "GitHub's AI coding assistant and agent for editors, the CLI and pull requests.",
-          "score": 100,
+          "score": 98,
           "status": "Tested",
           "test": {
-            "date": "2026-11-06",
+            "date": "2026-11-12",
             "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "GitHub Copilot CLI 1.0.106",
+            "tool_version": "GitHub Copilot CLI 1.0.109",
             "model": "gpt-6-luna (Copilot Free default; Fusion auto-routed, only Free candidate for this task)",
             "breakdown": {
               "task_success": 40,
-              "output_quality": 25,
+              "output_quality": 23,
               "speed_effort": 15,
               "cost_free_tier": 10,
               "developer_experience": 10
             },
-            "evidence": "Retest on the latest CLI (1.0.105 on Oct 30 and 1.0.98 on Oct 15 both scored 99). Passed 10/10 automated checks in 48 s with no interventions on Copilot Free (0.46 AI credits). Single-file app validates saved data (Array + field checks, try/catch), uses textContent, labels the input, names the task on the delete button, and flips the checkbox aria-label between complete and incomplete. The Oct 15/30 −1 quality for a static \"as complete\" label is gone. Self-check: recovered from a missing `python` binary by retrying with `python3` and `node --check`.",
+            "evidence": "Retest on the latest CLI (1.0.106 scored 100 on Nov 6). Passed 10/10 automated checks in 33 s with no interventions on Copilot Free (0.37 AI credits), with a clear final summary. Single-file app validates saved data (Array + field checks, try/catch), uses textContent, has a (visually hidden) label on the input and names the task on the delete button. Two regressions vs Nov 6 cost 2 quality points: −1 it uses crypto.randomUUID(), which only works in a secure context (probe: served over plain http on a LAN address, adding a task throws and nothing is added; same deduction Cursor got on Nov 3), and −1 the checkbox aria-label is static ('Mark \"task\" complete' even after it's checked), the same deduction as Cursor, Goose and Qwen Code. Opening index.html directly, as the README says, works.",
             "history": [
               {
                 "date": "2026-10-15",
@@ -38,6 +38,11 @@
                 "date": "2026-10-30",
                 "tool_version": "GitHub Copilot CLI 1.0.105",
                 "score": 99
+              },
+              {
+                "date": "2026-11-06",
+                "tool_version": "GitHub Copilot CLI 1.0.106",
+                "score": 100
               }
             ]
           }
@@ -439,11 +444,35 @@
           "date": "2026-11-11",
           "result": "Goose run completed (94 to 96); Qwen Code next",
           "note": "Three 1-token test requests to gemini-3.8-flash on the free tier at 03:01-03:05 CST: one timed out after 90 seconds, then two answered (82.6 and 11.2 seconds), so we started Goose for the first time since Oct 21. It finished in 15 minutes. That ends the blocked streak at 12 test mornings. Qwen Code wasn't run the same morning because Goose used most of the free tier's daily requests; it stays at 93 until its run."
+        },
+        {
+          "tool": "Qwen Code",
+          "date": "2026-11-12",
+          "result": "Postponed; score unchanged (93)",
+          "note": "Three 1-token test requests to gemini-3.8-flash on the free tier at 03:00-03:02 CST: two returned 503 'high demand' (1.1 and 1.3 seconds) and one timed out after 90 seconds, so we didn't start the Qwen Code run (Goose ran on Nov 11 when the free tier answered). We retested GitHub Copilot CLI instead, which needs no model key."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "klad",
+      "url": "https://klad.studio",
+      "description": "2D painting and animation app you share with a coding agent: you paint with a pen, the agent paints through the klad command line with the same brushes, layers and timeline, and every stroke stays editable data (no image model). Exports PNGs, sprite sheets or straight into Godot; ships MIT agent skills for Claude Code/Codex. Source-available (PolyForm Internal Use plus personal use, free under €500k revenue), not open source; build from source, macOS first (Linux with mouse). Show HN Nov 11, 2026.",
+      "found": "2026-11-12"
+    },
+    {
+      "name": "agentes.chat",
+      "url": "https://github.com/agentes-chat/agentes-chat",
+      "description": "Open-source, self-hosted Slack alternative where your team and AI agents share channels and DMs; agents can run commands on a connected computer. One-command Docker self-host (Postgres + pgvector) that's free with your own model keys, or a hosted cloud (agentes.chat). AGPL-3.0, created Nov 9, 2026.",
+      "found": "2026-11-12"
+    },
+    {
+      "name": "Cinematic Skill",
+      "url": "https://github.com/Moh4696/cinematic-skill",
+      "description": "Agent skill (Claude Code, Codex, Cursor, Gemini CLI, OpenCode) that turns a prompt like \"a 90-second documentary about the Wright brothers\" into a narrated film drawn entirely by code (Skia in Python): script, scratch voice (macOS say or espeak-ng, any TTS for the final), public-domain archive photos with licences, one continuous camera move, synthesized sound effects and burned-in captions. No generated video, so renders are repeatable. Needs Python and ffmpeg. MIT, created Nov 9, 2026.",
+      "found": "2026-11-12"
+    },
     {
       "name": "Modern Web Guidance (Chrome, Edge, Firefox, MDN)",
       "url": "https://github.com/GoogleChrome/modern-web-guidance",
