@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-12",
+  "updated": "2026-11-13",
   "leaderboards": [
     {
       "slug": "ai-coding-agents",
       "title": "Best AI coding agents",
       "status": "Round 1 complete",
-      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-11 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
+      "note": "Scored tools ran our standard task between 2026-10-15 and 2026-11-13 (see the test write-up). The AI model differs between tools (Copilot: gpt-6-luna, Cursor CLI: Composer 2.5, Aider, Cline, Crush, Goose, Pi and Qwen Code: gemini-3.8-flash, Bolt.new: its Free-plan default, OpenCode: deepseek-v4.1-flash-free, Kilo Code: Auto Free). Pricing for Copilot was rechecked 2026-11-06.",
       "tools": [
         {
           "name": "GitHub Copilot",
@@ -16,9 +16,9 @@
           "score": 98,
           "status": "Tested",
           "test": {
-            "date": "2026-11-12",
+            "date": "2026-11-13",
             "task": "task-v1 (Tiny To-Do)",
-            "tool_version": "GitHub Copilot CLI 1.0.109",
+            "tool_version": "GitHub Copilot CLI 1.0.110",
             "model": "gpt-6-luna (Copilot Free default; Fusion auto-routed, only Free candidate for this task)",
             "breakdown": {
               "task_success": 40,
@@ -27,7 +27,7 @@
               "cost_free_tier": 10,
               "developer_experience": 10
             },
-            "evidence": "Retest on the latest CLI (1.0.106 scored 100 on Nov 6). Passed 10/10 automated checks in 33 s with no interventions on Copilot Free (0.37 AI credits), with a clear final summary. Single-file app validates saved data (Array + field checks, try/catch), uses textContent, has a (visually hidden) label on the input and names the task on the delete button. Two regressions vs Nov 6 cost 2 quality points: −1 it uses crypto.randomUUID(), which only works in a secure context (probe: served over plain http on a LAN address, adding a task throws and nothing is added; same deduction Cursor got on Nov 3), and −1 the checkbox aria-label is static ('Mark \"task\" complete' even after it's checked), the same deduction as Cursor, Goose and Qwen Code. Opening index.html directly, as the README says, works.",
+            "evidence": "Retest on the latest CLI (1.0.109 scored 98 on Nov 12; 1.0.106 scored 100 on Nov 6). Passed 10/10 automated checks in 41 s with no interventions on Copilot Free (0.47 AI credits), with a clear final summary. Single-file app validates saved data (Array + field checks, try/catch), uses textContent, has a (visually hidden) label on the input and names the task on the delete button. Same two deductions as Nov 12, so the score holds at 98: −1 it uses crypto.randomUUID(), which only works in a secure context (probe: served over plain http on a LAN address, adding a task throws and nothing is added), and −1 the checkbox aria-label is static ('Mark \"task\" complete' even after it's checked). Opening index.html directly, as the README says, works.",
             "history": [
               {
                 "date": "2026-10-15",
@@ -43,6 +43,11 @@
                 "date": "2026-11-06",
                 "tool_version": "GitHub Copilot CLI 1.0.106",
                 "score": 100
+              },
+              {
+                "date": "2026-11-12",
+                "tool_version": "GitHub Copilot CLI 1.0.109",
+                "score": 98
               }
             ]
           }
@@ -450,11 +455,41 @@
           "date": "2026-11-12",
           "result": "Postponed; score unchanged (93)",
           "note": "Three 1-token test requests to gemini-3.8-flash on the free tier at 03:00-03:02 CST: two returned 503 'high demand' (1.1 and 1.3 seconds) and one timed out after 90 seconds, so we didn't start the Qwen Code run (Goose ran on Nov 11 when the free tier answered). We retested GitHub Copilot CLI instead, which needs no model key."
+        },
+        {
+          "tool": "Qwen Code",
+          "date": "2026-11-13",
+          "result": "Postponed; score unchanged (93)",
+          "note": "Three 1-token test requests to gemini-3.8-flash on the free tier at 03:03-03:04 CST all returned 503 'high demand' (5.6, 31.3 and 1.5 seconds), so we didn't start the scored Qwen Code run. Google released Gemini 4 Hydrogen on Nov 12 as the replacement for 3.8 Flash, and it answered on the same free tier; moving our Gemini-based tests to it would change the model behind six scores, so scores stay as measured on 3.8 Flash until we decide. We retested GitHub Copilot CLI 1.0.110 instead, which needs no model key (98, unchanged)."
         }
       ]
     }
   ],
   "new_this_week": [
+    {
+      "name": "Gemini 4 Hydrogen (Google)",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-hydrogen/",
+      "description": "Google's new fast model for everyday coding and agent workflows, replacing Gemini 3.8 Flash: 1M-token context, four thinking levels (low to xhigh), and Google reports it more than triples 3.8 Flash on Terminal-Bench 4.1 (57% vs 18.2%). In the Gemini API and AI Studio at $1.50/$7.50 per million input/output tokens, same as 3.8 Flash; a 5-token test request on our free-tier Gemini API key answered on Nov 13. Launched Nov 12, 2026.",
+      "found": "2026-11-13"
+    },
+    {
+      "name": "Expo Simulators",
+      "url": "https://expo.dev/services/simulators",
+      "description": "Cloud iOS simulators and Android emulators for coding agents (Claude Code, Codex, Cursor or anything that runs shell commands): the agent installs a build, taps through it and attaches screenshots, a recording and logs to the pull request, with no Mac needed. Works with React Native, Swift, Kotlin, Flutter and Unity builds. Paid Expo plans only for now ($0.10 per simulator minute, 60 minutes a month included until 2027); the free plan says 'coming soon'. Launched Nov 12, 2026.",
+      "found": "2026-11-13"
+    },
+    {
+      "name": "AgentRun (Parcha)",
+      "url": "https://github.com/Parcha-ai/agentrun",
+      "description": "Open-source (Apache-2.0) layer around the agent harness you already use (Claude Code, Codex and others) that adds self-improvement (notes and skills it commits to git for the next run), durable execution and a control plane. Run it locally with npx @parcha/agentrun or deploy it yourself; ~700 GitHub stars. Show HN Nov 12, 2026 (100 points). We scanned the repo but haven't run it.",
+      "found": "2026-11-13"
+    },
+    {
+      "name": "Guizang Game Skill",
+      "url": "https://github.com/op7418/guizang-game-skill",
+      "description": "Agent skill for Claude Code or Codex that walks the agent through building a playable browser 3D action game (three.js, one HTML file) with AI-made art and models, written up from the author's own build of the demo game, which you can play in the browser. AGPL-3.0, README in Chinese with an English version; ~275 stars. Created Nov 11, 2026. One early X user reported it didn't help a small local model, so expect best results with strong models.",
+      "found": "2026-11-13"
+    },
     {
       "name": "klad",
       "url": "https://klad.studio",

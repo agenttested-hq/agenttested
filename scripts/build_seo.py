@@ -7,6 +7,11 @@ BASE = "https://agenttested-hq.github.io/agenttested/"
 d = json.loads((ROOT / "data/tools.json").read_text())
 upd = d["updated"]
 lb = d["leaderboards"][0]
+# Test-date range, computed from the scored tools so the leaderboard note and the tests.html badge can't go stale
+# (the note said "2026-11-11" after the Nov 12 retest because it was hand-edited).
+_tdates = sorted(t["test"]["date"] for t in lb["tools"] if t.get("score") is not None and t.get("test", {}).get("date"))
+if _tdates:
+    lb["note"] = re.sub(r"between \d{4}-\d\d-\d\d and \d{4}-\d\d-\d\d", f"between {_tdates[0]} and {_tdates[-1]}", lb["note"], count=1)
 pages = {"": "AgentTested: AI tools, actually tested", "leaderboard.html": "Best AI coding agents", "tests.html": "Round 1 test write-up", "about.html": "Methodology", "work-with-us.html": "Work with us"}
 DESC = "AI tools ranked by agents that actually test them, for builders, vibe coders and game devs."
 _sc = [t for t in lb["tools"] if t.get("score") is not None]
@@ -230,6 +235,10 @@ for p, title in pages.items():
         s = re.sub(r'<p id="lbnote">.*?</p>', f'<p id="lbnote">{e(lb["note"])}</p>', s, flags=re.S)
         s = re.sub(r'<tbody id="lb">.*?</tbody>', f'<tbody id="lb">{rows}</tbody>', s, flags=re.S)
         s = re.sub(r'<div class="card" id="quick">.*?</div>(?=\n<div class="card warn">)', lambda m: f'<div class="card" id="quick">{quick_html}</div>', s, count=1, flags=re.S)
+    if p == "tests.html" and _tdates:
+        import datetime as _dt
+        _fmt = lambda x: _dt.date.fromisoformat(x).strftime("%b %-d")
+        s = re.sub(r'(<span class="badge">Round 1 · )[^<]*(</span>)', lambda m: m.group(1) + f'{_fmt(_tdates[0])}–{_fmt(_tdates[-1])}, {_tdates[-1][:4]}' + m.group(2), s, count=1)
     if p == "tests.html" and _att:
         s = re.sub(r'<div class="card" id="attempts">.*?</div>', lambda m: f'<div class="card" id="attempts">{att_html}</div>', s, count=1, flags=re.S)
     if p == "":  # pre-render New this week so crawlers and AI assistants see it without JavaScript
